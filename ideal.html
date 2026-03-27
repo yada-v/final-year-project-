@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		  <meta charset="UTF-8">
+		    <title>Idealization</title>
+
+		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+	</head><body>
+	<div class="container">
+
+		<div class="left">
+			
+			<div class="top">
+<p>To make the problem tractable, we simplify:
+</p>
+<ul>
+
+<li>the raindrop has constant mass</li>
+
+<li>air density  is constant </li>
+
+<li>the drop is spherical</li>
+
+<li>motion is purely vertical</li>
+
+<li>the shape remains fixed</li>
+</ul>
+<p class="highlight">We also ignore irrelevant properties such as colour or texture.</p>
+		
+
+<input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" >
+<label for="slider">Input text</label>
+<br> 	
+
+
+		<button id="nextButton">Next</button>
+		<button id="prev">Back</button>
+
+
+			</div>
+		</div>
+
+
+
+		<div class="right" id="right" >
+
+			<script>
+				function setup(){
+let rightDiv = document.getElementById("right");
+
+				let Can = createCanvas(rightDiv.offsetWidth,rightDiv.offsetHeight);
+
+					Can.parent("right")
+				}
+
+				function draw(){
+				let s = document.getElementById("slider").value;
+					background(0);
+
+				let r = lerp(100,0,s);
+				let size = 100;
+
+				let t = rect(200,200,size,size,r);
+				}
+			</script>	
+
+</div>
+</div>
+<script>
+	document.getElementById("nextButton").onclick = function(){
+		window.location.href = "geometry.html";}
+	document.getElementById("prev").onclick = function(){
+	window.location.href = "reality.html";
+	}
+</script>
+</body>
+</html>

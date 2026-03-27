@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		  <meta charset="UTF-8">
+		    <title>Geometry</title>
+
+		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+	</head>
+
+<body>
+	<div class="container">
+
+		<div class="left">
+			
+			<div class="top">
+<p>We define coordinates.
+
+Let \(y(t)\) be the vertical position, and \(v(t)\) be the downward velocity.
+</p>
+<p>Two forces act on the raindrop.</p>
+
+<p class="highlight"> Gravity: $$F_g = mg$$ </p><p>acting downward.</p>
+
+
+<p class="highlight"> Air Drag
+
+(For objects moving through air at moderate speeds, drag is approximately quadratic):
+
+$$F_d = \frac{1}{2}\rho C_d A v^2$$
+</p><p>
+where
+<br><br>
+\(\rho\) = air density
+
+<br><br>
+\(C_d\) = drag coefficient
+
+<br><br>
+\(A\) = cross-sectional area
+
+<br><br>
+Drag acts upward, opposite the motion.</p>	
+<button id="nextButton">Next</button>
+<button id="prev">Back</button>
+
+
+			</div>
+		</div>
+		<div class="right" id="right" >
+
+</div>
+</div>
+
+<script>
+	document.getElementById("nextButton").onclick = function(){
+window.location.href = "algebra.html";
+	}
+
+	
+	
+	document.getElementById("prev").onclick = function(){
+window.location.href = "ideal.html";
+	}
+
+</script>
+
+</body>
+</html>

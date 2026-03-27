@@ -1,0 +1,93 @@
+body{ margin: 0%;                                                                            
+font-family: "Poppins", sans-serif;                                           
+}
+
+.container{
+display: flex;
+min-height: 100vh;
+width: 100%;
+}
+
+
+p{
+  line-height: 1.7;
+  font-size: 1.6rem;
+  margin-bottom: 1.8rem;                                                           
+  }                                                                                                                                                                               
+.question{
+font-size: 2rem;
+font-weight: 600;
+color: #7fd3ff;
+}
+
+.left{
+background-color: #2D2D2D;
+width: 50%;
+padding: 60px;
+color: #fff;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+background: linear-gradient(180deg,#2d2d2d,#1f1f1f);
+overflow-y: auto;
+}
+
+
+li{
+font-size: 1.3rem;
+}
+
+.top , .bottom{
+	display: flex;
+	flex-direction: column;
+}
+
+.highlight{
+background:#3a3a3a;
+padding:15px 20px;
+border-radius:12px;
+border-left:4px solid #7fd3ff;
+}
+
+.slider{
+width: calc(100% - 40px);
+margin-left: 20px;
+margin-top: 10px;
+box-sizing: border-box;
+}
+
+label{
+margin-left: 20px;
+margin-top:10px
+}
+
+.right{
+height: 100vh;
+position: sticky;
+background-color: #2D2D2D;
+width: 50%;
+top: 0;
+}
+
+#gravity, #drag{
+position: absolute;
+color: white;
+font-size: 1.4rem;                                                                 
+pointer-events: none;
+
+}
+
+#nextButton , #prev , #restart{
+padding: 12px 24px;
+    font-size: 1.4rem;
+    background-color: #7fd3ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#nextButton:hover , #prev:hover {
+background-color: #5bb0e0;                                                          
+}
