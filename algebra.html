@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>                                                                                  <meta charset="UTF-8">
+<title>Algebra</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="container">
+<div class="left">
+<div class="top">
+<p>Using Newton’s second law
+
+$$ F = ma $$
+
+the equation of motion becomes
+
+$$ m\frac{dv}{dt} = mg - \frac{1}{2}\rho C_d A v^2 $$
+
+This differential equation describes the velocity evolution of the raindrop.
+
+Terminal velocity occurs when acceleration becomes zero:
+
+$$ \frac{dv}{dt} = 0 $$
+
+So the forces balance:
+
+$$ mg = \frac{1}{2}\rho C_d A v_t^2 $$
+
+</p><p class="highlight">
+
+Solving for terminal velocity gives
+
+$$ v_t = \sqrt{\frac{2mg}{\rho C_d A}} $$
+
+</p>		
+
+<button id="nextButton">Next</button>
+<button id="prev">Previous</button>
+</div>
+</div>
+<div class="right" id="right" >
+<div id="gravity"> $$mg$$</div>
+<div id="drag">$$F_d$$</div>
+
+<script>
+function setup() {
+
+let rightDiv= document.getElementById("right");
+
+let canvas=createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
+	canvas.parent("right");
+
+
+
+}
+
+function arrowLabel(x1,y1,x2,y2,id){
+
+stroke(255);	
+strokeWeight(2);
+line(x1,y1,x2,y2);
+
+let angle = atan2(y2-y1,x2-x1);
+
+push();
+translate(x2,y2);
+rotate(angle);
+triangle(0, 0, -10, 5, -10, -5);
+pop();
+
+let mx = (x1+x2)/2;
+let my = (y1+y2)/2;
+
+let offset = 25;
+let px = -sin(angle)*offset;
+let py = cos(angle)*offset;
+
+let direction = y2 - y1;
+	if(direction>0){
+px = -px;
+py = -py;
+}
+
+let label = document.getElementById(id);
+
+label.style.left = mx + px + "px";
+label.style.top = my + py + "px";
+
+
+	}
+
+
+
+function draw() {
+background(50);
+circle(width/2,height/2,100);
+
+arrowLabel(width/2, height/2 ,width/2, height/2 + 400 , "gravity");
+arrowLabel(width/2,height/2,width/2,height/2 - 300, "drag");
+}
+
+
+document.getElementById("nextButton").onclick = function(){
+window.location.href = "main.html";
+}
+
+document.getElementById("prev").onclick = function(){
+window.location.href = "geometry.html";
+}
+
+</script>
+</div>
+</div>
+</body>
+</html>
