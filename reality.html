@@ -35,6 +35,56 @@
 		</div>
 		<div class="right" id="right" >
 
+
+			<script>
+
+
+let lines = [];
+				function setup(){
+let rightDiv= document.getElementById("right");
+let canvas=createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
+canvas.parent("right");
+textAlign(CENTER,CENTER)
+for(let i = 0;i<100;i++){
+	lines.push({
+x: random(width),
+y: random(height),
+len: random(20,50),
+speed: random(10,20)
+	});
+}
+}
+
+let dropx;
+let dropy;
+
+
+
+function draw(){
+background(80,160,200);
+
+textSize(64);
+text("💧" , width/2, height/2)
+
+
+for(let l of lines){
+stroke(255);
+strokeWeight(2);
+line(l.x,l.y,l.x,l.y+l.len);
+l.y -= l.speed;
+
+	if(l.y<0){l.y=height;}
+
+
+}
+
+
+}
+
+
+				
+			</script>
+
 </div>
 </div>
 

@@ -9,7 +9,19 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
+<style>
+:right{
+position: absolute;
+}
 
+#ideal ,#real{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+</style>
 	</head><body>
 	<div class="container">
 
@@ -34,7 +46,7 @@
 		
 
 <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" >
-<label for="slider">Input text</label>
+<label for="slider"></label>
 <br> 	
 
 
@@ -49,30 +61,111 @@
 
 		<div class="right" id="right" >
 
+			<div id="real"></div>
+			<div id="ideal"></div>
+ <script>
+
+
+
+let realSketch = function(p){
+
+let lines = [];
+p.setup = function(){
+let rightDiv= document.getElementById("real");
+let canvas=p.createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);  canvas.parent("real");
+p.textAlign(p.CENTER,p.CENTER)
+for(let i = 0;i<100;i++){
+        lines.push({
+x: p.random(p.width),
+y: p.random(p.height),
+len: p.random(20,50),
+speed: p.random(10,20)
+        });
+}
+}
+
+let dropx;
+let dropy;
+
+
+
+p.draw =function(){
+p.background(80,160,200);
+
+p.textSize(64);
+p.text("💧" , p.width/2, p.height/2)
+for(let l of lines){
+p.stroke(255);
+p.strokeWeight(2);
+p.line(l.x,l.y,l.x,l.y+l.len);
+l.y -= l.speed;
+
+        if(l.y<0){l.y=p.height;}
+
+}
+};
+};
+new p5(realSketch);
+
+
+</script>
+
+ <script>
+
+let idealSketch = function(p){
+
+let lines = [];
+p.setup = function(){
+let rightDiv= document.getElementById("ideal");
+let canvas=p.createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);  canvas.parent("ideal");
+p.textAlign(p.CENTER,p.CENTER)
+for(let i = 0;i<100;i++){
+        lines.push({
+x: p.random(p.width),
+y: p.random(p.height),
+len: p.random(20,50),                                                 speed: p.random(10,20)                                                        });
+}
+}
+
+
+let dropx;
+let dropy;
+
+p.draw =function(){
+p.background(80,160,200);
+p.circle(p.width/2,p.height/2,37.5);
+
+for(let l of lines){
+p.stroke(255);
+p.strokeWeight(2);
+p.line(l.x,l.y,l.x,l.y+l.len);
+l.y -= l.speed;
+
+        if(l.y<0){l.y=p.height;}
+}}};
+new p5(idealSketch);
+
+                        </script>	
+
 			<script>
-				function setup(){
-let rightDiv = document.getElementById("right");
+let slider = document.getElementById("slider")
 
-				let Can = createCanvas(rightDiv.offsetWidth,rightDiv.offsetHeight);
+function update(){
 
-					Can.parent("right")
-				}
+let t = parseFloat(slider.value);
 
-				function draw(){
-				let s = document.getElementById("slider").value;
-					background(0);
+document.getElementById("real").style.opacity= 1 - t ;
+document.getElementById("ideal").style.opacity=t;
+}
 
-				let r = lerp(100,0,s);
-				let size = 100;
-
-				let t = rect(200,200,size,size,r);
-				}
+update();
+slider.addEventListener("input",update);
 			</script>	
 
 </div>
 </div>
 <script>
-	document.getElementById("nextButton").onclick = function(){
+document.getElementById("nextButton").onclick = function(){
 		window.location.href = "geometry.html";}
 	document.getElementById("prev").onclick = function(){
 	window.location.href = "reality.html";
