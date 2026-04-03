@@ -15,7 +15,13 @@
 position: relative;
 }
 
-#ideal, #real{
+.canvas-wrapper{
+    position: relative;
+    width: 70vw;
+    height: 52.5vw;
+}
+
+#igraph{
     position: absolute;
     top: 0;
     left: 0;
@@ -23,6 +29,19 @@ position: relative;
     height: 100%;
 }
 
+.black{
+        width:500px;
+        height:600px;
+        background:#333;
+        margin:30px auto;
+        opacity:0.9;
+
+}
+
+p{
+margin-top: 20px;
+font-size: 19px;
+}
 
 </style>
 	</head><body>
@@ -47,7 +66,6 @@ position: relative;
         <img src="3.jpg">                                      <span>Discretisation</span>
   </div>
 
-
   <div class="step">
     <img src="4.jpg">
     <span>Geometry</span>
@@ -64,35 +82,44 @@ position: relative;
 		<div class="left">
 			
 			<div class="top">
-<p>Consider a small raindrop falling from thousands of meters above the ground.</p>
-<div id="qwert"><p><ul><li>We strip away details that are unnecessary for solving the problem.
-                </li></ul></p></div>                           
-		<div id="qwer"><p> <ul><li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li> </ul></p>                                                   </div>
-	<br>	
+<ul>
+	<li>We strip away details that are unnecessary for solving the problem.</li> </ul>
 <label for="slider">Drag the slider to view the process of idealization</label>
+
+	<ul id="qwert"> <li> We idealize the raindrop as a small spherical object with constant mass.</li>
+<li>We also assume the motion is one-dimensional (top to bottom), with no wind effects.</li>
+</li>
+</ul>
+<ul>
+<li id="qwer">Gravity speeds the object up while air resistance slows it down. When the forces balance, the net force is zero, so by inertia it continues at a constant terminal velocity.</li> </ul> 
+
+	<br>	
 <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" >
 <br> 	
 		</div>
 		</div>
 		<div class="right" id="right" >
 			<div class="canvas-wrapper">
-			<div id="real"></div>
-			<div id="ideal"></div>
+			<div id="igraph"></div>
 			</div>
-<script src="i2003.js" defer></script>
-<script src="i2004.js" defer></script>
+<script src="igraph.js" defer></script>
 <script src="i2002.js" defer></script>
 <script src="i2001.js" defer></script>
 <script src="ideal1left.js" defer></script>
-<script src="black.js" defer></script>
-<div class="black" id="black">
-<p>To mathematically model the variation of temperature in the rod let us idealise the system.</p>
+<script src="idealblack.js" defer></script>
+<script src="i21.js" defer></script>
+<div class="black" id="black"><p>When you stick your hand slightly outside a car that is at rest,
+ you don’t feel any force from the air. But when the car starts moving, you feel a push from the air in the direction opposite to the car’s motion. This push increases as the speed of the car increases.</p>
+<p>
+A similar effect happens for objects falling through air. As an object falls, air exerts a drag force opposite to its motion. As the object’s speed increases, this drag force also increases.</p><p>
+At a certain point, the velocity of the object becomes high enough that the drag force equals its weight. At this point, the net force on the object becomes zero. From then on, the object continues to move with constant velocity due to inertia. This constant velocity is called terminal velocity.</p>
 <div>
-	<button id="nextButton">Let's idealise the system</button>
+	<button id="nextButton">Continue</button>
 </div>
-			</div>
 </div>
-
+</div>
+</div>
+</div>
 </div>
 </div>
 </body>

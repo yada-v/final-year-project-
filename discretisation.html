@@ -2,7 +2,7 @@
 <html>
 	<head>
 		  <meta charset="UTF-8">
-		    <title>Geometrization</title>
+		    <title>Discretization</title>
 
 		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -10,23 +10,22 @@
 <link rel="stylesheet" href="style.css">
 <style>
 
-
 .right{
 position: relative;
 }
 
 .canvas-wrapper{
     position: relative;
-    width: 60vw;
-    height: 45vw;
+    width: 50vw;
+    height: 52.5vw;
 }
 
-#graph , #label {
+#disc , #label {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 48vw;
+    height: 200%;
 }
 
 .black{
@@ -39,7 +38,11 @@ position: relative;
 }
 
 .left{
-	width: 40vw;
+	width: 50vw;
+
+}
+
+#nextButton{
 
 }
 
@@ -51,7 +54,7 @@ font-size: 19px;
 }
 
 
-#graph{
+#disc{
 z-index: 1;
 }
 
@@ -61,7 +64,6 @@ pointer-events: none;
 }
 
 
-
 /*from her*/
 .latexLabels{
 position: absolute;
@@ -69,8 +71,6 @@ transform: translate(-50%, -50%);
 font-size: 1.2rem;
 margin-left: 70%;
 }
-
-
 
 </style>
 	</head><body>
@@ -91,12 +91,12 @@ margin-left: 70%;
     <span>Idealization</span>
   </div>
 
-  <div class="step">
+  <div class="step active">
   	<img src="3.jpg">
 	<span>Discretisation</span>
   </div>
 
-  <div class="step active">
+  <div class="step">
     <img src="4.jpg">
     <span>Geometry</span>
   </div>
@@ -110,29 +110,73 @@ margin-left: 70%;
 	<div class="container">
 
 		<div class="left">
-<p>The spacing between the dotted lines represents Δt, while the height represents the corresponding velocity
 
-$$v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)$$
-. As Δt → 0 (i.e., Δt → dt), the graph approaches a smooth continuous curve.</p>
+<p>The motion of a falling object under gravity and air drag is described by:
+
+$$
+\frac{dv}{dt} = g - \frac{k}{m}v^2
+$$
+
+To simulate it numerically, we discretise time into small steps \(∆t\) and update the velocity as:
+
+$$
+v_{n+1} = v_n + \Delta t \left(g - \frac{k}{m}v_n^2\right)
+$$
+
+At terminal velocity, acceleration becomes zero:
+
+$$
+v_t^2 = \frac{mg}{k}
+$$
+
+So the update can also be written as:
+
+$$
+v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)
+$$
+
+For an object dropped from rest:
+
+$$
+v_0 = 0
+$$
+
+This allows us to compute the velocity step by step and see it approach \(v_t\).</p>
 <br>
-<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">
-<button id="nextButton">Continue</button>
+<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">		
 <br>	
+	<button id="nextButton">Continue</button>
 
 		</div>
 		<div class="right" id="right" >
 			<div class="canvas-wrapper">
-				<div id="graph">
-	<script src="geom.js" defer></script>
-	<script src="g1.js" defer></script>
+				<div id="disc">
+	<script src="disc.js" defer></script>
+	<script src="d1.js"defer></script>
+
+</div>
+			<div id="label"> 
+			<div class="latexLabels" id="vn"> $$v_n$$</div>
+			<div class="latexLabels" id="vn1">$$v_{n+1}$$</div>
+			<div class="latexLabels" id="vn2">$$v_{n+2}$$</div>
+			<div class="latexLabels" id="vn3">$$v_{n+3}$$</div>
+			<div class="latexLabels" id="vn4">$$v_{n+4}$$</div>
+
+
+			
+
+</div>
+
+
+</div>
 
 
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
+
+
 </div>
 </body>
 </html>

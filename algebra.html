@@ -1,127 +1,135 @@
 <!DOCTYPE html>
 <html>
-<head>                                                                                  <meta charset="UTF-8">
-<title>Algebra</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+	<head>
+		  <meta charset="UTF-8">
+		    <title>Algebra</title>
+
+		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 <link rel="stylesheet" href="style.css">
 <style>
 
-#gravity, #drag{
-position: absolute;
-color: white;
-font-size: 1.4rem;                                                    
+
+
+
+
+
+
+
+.right{
+position: relative;                                                                     }
+                                                                                        .canvas-wrapper{                                                                            position: relative;                                                                     width: 60vw;
+    height: 45vw;                                                                       }                                                                                                                                                                               #graph , #label {                                                                           position: absolute;
+    top: 0;                                                                                 left: 0;                                                                                width: 100%;                                                                            height: 100%;                                                                       }                                                                                                                                                                               .black{
+        width:300px;
+        height:400px;                                                                           background:#333;                                                                        margin:30px auto;                                                                       opacity:0.9;
+
+}
+
+.left{
+        width: 40vw;
+
+}
+
+.right{ width: 50vw;}
+
+p{
+margin-top: 20px;
+font-size: 19px;
+}
+
+
+#graph{
+z-index: 1;
+}
+
+#label{
+z-index: 2;
 pointer-events: none;
+}
 
-	}
+
+
+/*from her*/
+.latexLabels{
+position: absolute;
+transform: translate(-50%, -50%);
+font-size: 1.2rem;
+margin-left: 70%;
+}
+
+
+
+
 </style>
-</head><body>
-<div class="container">
-<div class="left">
-<div class="top">
-<p>Using Newton’s second law
+	</head><body>
+        <div class="main">
 
-$$ F = ma $$
+                <!--copy to every page-->
+        <div class="tab">
+                <img class="logo" src="tifr-logo-black.png" alt="">
 
-the equation of motion becomes
+<div class="steps">
+                                                                        <div class="step">
+    <img src="sky.jpg">
+    <span>Reality</span>
+  </div>
 
-$$ m\frac{dv}{dt} = mg - \frac{1}{2}\rho C_d A v^2 $$
+  <div class="step">
+    <img src="2.jpg">
+    <span>Idealization</span>
+  </div>
 
-This differential equation describes the velocity evolution of the raindrop.
+  <div class="step">
+  	<img src="3.jpg">
+	<span>Discretisation</span>
+  </div>
 
-Terminal velocity occurs when acceleration becomes zero:
+  <div class="step">
+    <img src="4.jpg">
+    <span>Geometry</span>
+  </div>
 
-$$ \frac{dv}{dt} = 0 $$
+  <div class="step active">
+        <img src="5.jpg" alt="">                                           <span>Algebra</span>
+  </div>
 
-So the forces balance:
+</div>  </div>
 
-$$ mg = \frac{1}{2}\rho C_d A v_t^2 $$
+	<div class="container">
 
-</p><p class="highlight">
+		<div class="left">
 
-Solving for terminal velocity gives
+<p>The drag force is given by $$F_d = \frac{1}{2} C_d A \rho v^2$$, where \(C_d\) is the drag coefficient, \(A\) is cross-sectional area, \(\rho\) is density of the medium, and \(v\) is velocity. The equation of motion is $$m \frac{dv}{dt} = mg - F_d$$. At terminal velocity, \(dv/dt = 0\), so \(mg = F_d\). Substituting the drag force gives $$mg = \frac{1}{2} C_d A \rho v_t^2$$. Solving for \(v_t\) yields the terminal velocity: $$v_t = \sqrt{\frac{2mg}{C_d A \rho}}$$.</p>
+<br>
+<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">		
+<br>	
+	<button id="nextButton">Back to Start</button>
 
-$$ v_t = \sqrt{\frac{2mg}{\rho C_d A}} $$
+		</div>
+		<div class="right" id="right" >
+			<div class="canvas-wrapper">
+				<div id="graph">
+	<script src="copy.js" defer></script>
+	<script src="a1.js"defer></script>
 
-</p>		
+</div>
+	
+			
 
-<button id="nextButton">Next</button>
-<button id="prev">Previous</button>
+</div>
+
+
+</div>
+
+
 </div>
 </div>
-<div class="right" id="right" >
-<div id="gravity"> $$mg$$</div>
-<div id="drag">$$F_d$$</div>
-
-<script>
-function setup() {
-
-let rightDiv= document.getElementById("right");
-
-let canvas=createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
-	canvas.parent("right");
-
-
-
-}
-
-function arrowLabel(x1,y1,x2,y2,id){
-
-stroke(255);	
-strokeWeight(2);
-line(x1,y1,x2,y2);
-
-let angle = atan2(y2-y1,x2-x1);
-
-push();
-translate(x2,y2);
-rotate(angle);
-triangle(0, 0, -10, 5, -10, -5);
-pop();
-
-let mx = (x1+x2)/2;
-let my = (y1+y2)/2;
-
-let offset = 25;
-let px = -sin(angle)*offset;
-let py = cos(angle)*offset;
-
-let direction = y2 - y1;
-	if(direction>0){
-px = -px;
-py = -py;
-}
-
-let label = document.getElementById(id);
-
-label.style.left = mx + px + "px";
-label.style.top = my + py + "px";
-
-
-	}
-
-
-
-function draw() {
-background(50);
-circle(width/2,height/2,100);
-
-arrowLabel(width/2, height/2 ,width/2, height/2 + 400 , "gravity");
-arrowLabel(width/2,height/2,width/2,height/2 - 300, "drag");
-}
-
-
-document.getElementById("nextButton").onclick = function(){
-window.location.href = "main.html";
-}
-
-document.getElementById("prev").onclick = function(){
-window.location.href = "geometry.html";
-}
-
-</script>
 </div>
+</div>
+
+
 </div>
 </body>
 </html>
