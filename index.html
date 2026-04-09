@@ -11,8 +11,30 @@
 <style>
 .right img{
 
-  border-radius: 5%;                                        border: 4px solid #999;
+  border-radius: 5%;                                       
+  border: 4px solid #999;
 }
+
+.images_y{
+display: flex;
+flex-direction: column;
+gap:10px;
+
+}
+
+	
+.row{
+display:flex;
+gap:10px;
+justify-content: center;
+}
+
+.op{
+width: 250px;
+height: auto;
+
+			}
+
 </style>
 	</head>
 <body>
@@ -74,10 +96,16 @@
 			</div>
 			</div>
 			<div class="right" id="right" >
-			<img class="op" src="rain.jpg">
-			<img class="op" src="sky.jpg">	
+				<div class="images_y">
+		<div class="row">
+			
+		<img class="op" src="rain.jpg">
+		<img class="op" src="sky.jpg">	
+			
+			</div>
 
-<button id="nextButton">To answer these questions, let us mathematically model these systems !</button>                                   
+<button id="nextButton">To answer these questions, let us mathematically model these systems !</button>        
+</div>
 </div>
 </div>
 </div>
