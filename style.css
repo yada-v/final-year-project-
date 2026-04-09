@@ -193,7 +193,6 @@ width:100%;}
 .right{
 height: calc(100vh - 180px);
 position: sticky;
-justify-content: center;
 background-color: #E8EEFA;
 width: 70%;
 top: 0;
