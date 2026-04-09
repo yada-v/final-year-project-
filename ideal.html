@@ -11,26 +11,42 @@
 <link rel="stylesheet" href="style.css">
 <style>
 
-.right{
-position: relative;
-display: flex;
 
+.right {
+    position: relative;
+    display: flex;
 }
 
-#ideal, #real{
+.temp {
+    display: flex;
+    flex-direction: row;          
+    align-items: flex-start;
+    gap: 20px;                  
+    width: 100%;
+}
+
+.canvas-wrapper {
+    position: relative;           
+    width: 30vw;                  
+    height: 50vh;                
+    flex-shrink: 0;               
+}
+
+#ideal, #real {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100%;                  
     height: 100%;
 }
 
-
-.canvas-wrapper{
-display:flex;               
-flex-direction:column;
-gap:10px;
-justify-content: center;
+.black {
+    width: 300px;
+    height: 400px;
+    background: #333;
+    margin: 30px auto;
+    opacity: 0.9;
+    flex: 1;                      
 }
 
 
@@ -85,6 +101,7 @@ justify-content: center;
 		</div>
 		</div>
 		<div class="right" id="right" >
+			<div class = "temp">
 			<div class="canvas-wrapper">
 			<div id="real"></div>
 			<div id="ideal"></div>
@@ -99,6 +116,8 @@ justify-content: center;
 <p>To mathematically model the variation of temperature in the rod let us idealise the system.</p>
 <div>
 	<button id="nextButton">Let's idealise the system</button>
+
+	</div>
 </div>
 			</div>
 </div>
