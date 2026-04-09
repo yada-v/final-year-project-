@@ -78,10 +78,10 @@ strokeWeight(3);
 
 stroke(255,0,0);
 	for (let x = 0; x <= 10; x = x + 10*h/3) {
-		let y = 0.94*(1 - exp(-x/1));
+		let y = 0.7*(1 - exp(-x/1));
 
 		let px = map(x, 0, 10, 50, width - 50);
-		let py = map(y, 0, 1.3, height - 50, 50);
+		let py = map(y, 0, 1, height - 50, 50);
 
 		vertex(px, py);
 
@@ -93,7 +93,7 @@ line(px,height-50,px,py);
 	pop();
 		
 	}
-let yLine = 29 * height / 100 ;
+let yLine = 0.3 * (height - 100) + 50 ;
 dottedLine(50, yLine, width - 50, yLine);
 
 	endShape();
