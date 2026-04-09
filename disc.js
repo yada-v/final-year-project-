@@ -135,11 +135,11 @@ function positionLabels() {
 	let h = wrapper.height;
 
 
-	select('#vn').position(w * 0.05, h * 0.5);
-	select('#vn1').position(w * 0.05, h * 0.75);  
-	select('#vn2').position(w * 0.05, h * 1);   
-	select('#vn3').position(w * 0.05, h * 1.25);   
-	select('#vn4').position(w * 0.05, h * 1.5);
+	select('#vn').position(w * 0.05, h * 0.25);
+	select('#vn1').position(w * 0.05, h * 0.375);  
+	select('#vn2').position(w * 0.05, h * 0.5);   
+	select('#vn3').position(w * 0.05, h * 0.625);   
+	select('#vn4').position(w * 0.05, h * 0.75);
 
 }
 
