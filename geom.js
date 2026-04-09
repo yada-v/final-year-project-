@@ -78,7 +78,7 @@ strokeWeight(3);
 
 stroke(255,0,0);
 	for (let x = 0; x <= 10; x = x + 10*h/3) {
-		let y = 1*(1 - exp(-x/1));
+		let y = 0.94*(1 - exp(-x/1));
 
 		let px = map(x, 0, 10, 50, width - 50);
 		let py = map(y, 0, 1.3, height - 50, 50);

@@ -16,10 +16,15 @@
 position: relative;   
 height: calc(100vh - 180px);
 }
-                                                                                        .canvas-wrapper{                                                                            position: relative;                                                                     width: 60vw;
-												height: calc(100vh - 180px);
+                                                                                        
+    .canvas-wrapper{                                                                            
+	    position: relative;                                                                     
+	    width: 60vw;
+												
+	    height: calc(100vh - 180px);
                                                              
-											}                                                                                                                                                                               #graph , #label {                                                                           position: absolute;
+											}                                                                                                                                                                             
+    #graph , #label {                                                                           position: absolute;
     top: 0;                                                                                 left: 0;                                                                                width: 100%;                                                                            height: 100%;                                                                       }                                                                                                                                                                               .black{
         width:300px;
         height:400px;                                                                           background:#333;                                                                        margin:30px auto;                                                                       opacity:0.9;
@@ -71,7 +76,8 @@ margin-left: 70%;
                 <img class="logo" src="tifr-logo-black.png" alt="">
 
 <div class="steps">
-                                                                        <div class="step">
+                                                                       
+	<div class="step">
     <img src="sky.jpg">
     <span>Reality</span>
   </div>
@@ -92,7 +98,8 @@ margin-left: 70%;
   </div>
 
   <div class="step active">
-        <img src="5.jpg" alt="">                                           <span>Algebra</span>
+        <img src="5.jpg" alt="">                                          
+	<span>Algebra</span>
   </div>
 
 </div>  </div>
@@ -102,16 +109,12 @@ margin-left: 70%;
 		<div class="left">
 
 <p>The drag force is given by $$F_d = \frac{1}{2} C_d A \rho v^2$$, where \(C_d\) is the drag coefficient, \(A\) is cross-sectional area, \(\rho\) is density of the medium, and \(v\) is velocity. The equation of motion is $$m \frac{dv}{dt} = mg - F_d$$. At terminal velocity, \(dv/dt = 0\), so \(mg = F_d\). Substituting the drag force gives $$mg = \frac{1}{2} C_d A \rho v_t^2$$. Solving for \(v_t\) yields the terminal velocity: $$v_t = \sqrt{\frac{2mg}{C_d A \rho}}$$.</p>
-<br>
-<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">		
-<br>	
-	<button id="nextButton">Back to Start</button>
-
+<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">			<button id="nextButton">Back to Start</button>
 		</div>
 		<div class="right" id="right" >
 			<div class="canvas-wrapper">
 				<div id="graph">
-	<script src="copy.js" defer></script>
+	<script src="geom.js" defer></script>
 	<script src="a1.js"defer></script>
 
 </div>
