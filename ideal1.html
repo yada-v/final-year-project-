@@ -15,31 +15,40 @@
 position: relative;
 display:flex;
 height:calc(100vh-180px);
-justify-content: center;
 }
 
-.canvas-wrapper{
-    position: relative;
-    width: 70vw;
-    height: calc(100vh - 300px);
+.canvas-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  height: auto;
+  padding: 10px;
 }
 
-#igraph{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 22vw;
-    height: 22vw;
+#igraph {
+  flex: 2;          
+  min-width: 260px;
+  aspect-ratio: 1 / 0.9;   
+  background: white;
+  border-radius: 24px;
 }
 
-.black{
-        width:500px;
-        height:600px;
-        background:#333;
-        margin:30px auto;
-        opacity:0.9;
-
+.black {
+  flex: 1;
+  width: auto;
+  max-width: 340px;
+  margin: 0;         
+  background: #3A3C3F;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  font-size: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
 
 p{
 margin-top: 20px;
