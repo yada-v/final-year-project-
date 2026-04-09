@@ -13,6 +13,8 @@
 
 .right{
 position: relative;
+display:flex;
+height:calc(100vh-180px);
 }
 
 .canvas-wrapper{
@@ -25,7 +27,7 @@ position: relative;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 40%;
     height: 100%;
 }
 
@@ -63,7 +65,8 @@ font-size: 19px;
   </div>
 
   <div class="step">
-        <img src="3.jpg">                                      <span>Discretisation</span>
+        <img src="3.jpg">                                   
+	<span>Discretisation</span>
   </div>
 
   <div class="step">
@@ -101,7 +104,7 @@ font-size: 19px;
 		<div class="right" id="right" >
 			<div class="canvas-wrapper">
 			<div id="igraph"></div>
-			</div>
+			
 <script src="igraph.js" defer></script>
 <script src="i2002.js" defer></script>
 <script src="i2001.js" defer></script>
@@ -115,6 +118,7 @@ A similar effect happens for objects falling through air. As an object falls, ai
 At a certain point, the velocity of the object becomes high enough that the drag force equals its weight. At this point, the net force on the object becomes zero. From then on, the object continues to move with constant velocity due to inertia. This constant velocity is called terminal velocity.</p>
 <div>
 	<button id="nextButton">Continue</button>
+</div>
 </div>
 </div>
 </div>
