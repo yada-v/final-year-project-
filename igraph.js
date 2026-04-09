@@ -92,9 +92,8 @@ textAlign(LEFT,BOTTOM);
 noStroke();
 let col1 = color(69, 123, 157);
 fill(col1);
-let q = " = 0";
 if (t==1) {
-	text("Net Force" + q,width/4 + 20,0 + up);
+	text("Net Force\n    = 0",width/4 + 20,0 + up);
 } else {
 	text("Net Force",width/4 + 20,0 + up);
 }
@@ -127,7 +126,7 @@ if(t==0){
 	}
 
 if(t==1){
-        text("Terminal Velocity", -1*width/5 - 20, 0.7*d);
+        text("Terminal\nVelocity", -1*width/5 - 20, 0.7*d);
         }
 //back to normal
 translate(-width/2,-height/2);
