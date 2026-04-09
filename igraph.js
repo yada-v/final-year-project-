@@ -126,7 +126,7 @@ if(t==0){
 	}
 
 if(t==1){
-        text("Terminal\nVelocity", -1*width/5 - 20, 0.7*d);
+        text(" Terminal\nVelocity", -1*width/5 - 20, 0.7*d);
         }
 //back to normal
 translate(-width/2,-height/2);

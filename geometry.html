@@ -13,13 +13,13 @@
 
 .right{
 position: relative;
+height: calc(100vh - 180px);
 }
 
 .canvas-wrapper{
     position: relative;
     width: 60vw;
-height: calc(100vh-180px);
-
+    height: calc(100vh - 180px);
 }
 
 #graph , #label {
@@ -27,47 +27,27 @@ height: calc(100vh-180px);
     top: 0;
     left: 0;
     width: 60vw;
-    height: calc(100vh-180px);
-
+    height: 100%;
 }
 
 
 .left{
 	width: 40vw;
-height: calc(100vh-180px);
+	height: calc(100vh - 180px);
 
 }
 
-.right{ width: 50vw;
-height: calc(100vh-180px);
-
-}
+.right{ width: 60vw;}
 
 p{
-margin-top: 20px;
-font-size: 19px;
+margin-top: 1rem;
+font-size: 1rem;
 }
 
 
 #graph{
 z-index: 1;
 }
-
-#label{
-z-index: 2;
-pointer-events: none;
-}
-
-
-
-/*from her*/
-.latexLabels{
-position: absolute;
-transform: translate(-50%, -50%);
-font-size: 1.2rem;
-margin-left: 70%;
-}
-
 
 
 </style>
