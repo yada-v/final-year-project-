@@ -13,6 +13,8 @@
 
 .right{
 position: relative;
+display: flex;
+
 }
 
 #ideal, #real{
@@ -21,6 +23,14 @@ position: relative;
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+
+.canvas-wrapper{
+display:flex;               
+flex-direction:column;
+gap:10px;
+justify-content: center;
 }
 
 
@@ -86,7 +96,7 @@ position: relative;
 <script src="ideal1left.js" defer></script>
 <script src="black.js" defer></script>
 <div class="black" id="black">
-<p>To mathematically model the variation of velocity of a body moving through a medium, let us idealise the system.</p>
+<p>To mathematically model the variation of temperature in the rod let us idealise the system.</p>
 <div>
 	<button id="nextButton">Let's idealise the system</button>
 </div>
