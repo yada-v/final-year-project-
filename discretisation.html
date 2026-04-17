@@ -1,173 +1,149 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		  <meta charset="UTF-8">
-		    <title>Discretization</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Discretization</title>
 
-		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<link rel="stylesheet" href="style.css">
-<style>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .right {
+        position: relative;
+        height: calc(100vh - 180 * 0.125vw);
+      }
 
-.right{
-position: relative;
-height: calc(100vh - 180*0.125vw);
-}
+      .canvas-wrapper {
+        position: relative;
+        width: 50vw;
+        height: calc(100vh - 180 * 0.125vw);
+      }
 
-.canvas-wrapper{
-    position: relative;
-    width: 50vw;
-    height: calc(100vh - 180*0.125vw);
-}
+      #disc,
+      #label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 48vw;
+        height: calc(100vh - 180 * 0.125vw);
+      }
 
-#disc , #label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 48vw;
-    height: calc(100vh - 180*0.125vw);
-}
+      .black {
+        width: calc(300 * 0.125vw);
+        height: calc(400 * 0.125vw);
+        background: #333;
+        margin: calc(30 * 0.125vw) auto;
+        opacity: 0.9;
+      }
 
-.black{
-        width:300*0.125vw;
-        height:400*0.125vw;
-        background:#333;
-        margin:30*0.125vw auto;
-        opacity:0.9;
+      .left {
+        width: 50vw;
+        height: calc(100vh - 220 * 0.125vw);
+      }
 
-}
+      .right {
+        width: 50vw;
+      }
 
-.left{
-	width: 50vw;
-	height: calc(100vh - 220*0.125vw);
+      p {
+        margin-top: calc(15 * 0.125vw);
+        font-size: calc(2vw);
+      }
 
-}
+      #disc {
+        z-index: 1;
+      }
 
-#nextButton{
+      #label {
+        z-index: 2;
+        pointer-events: none;
+      }
 
-}
+      .latexLabels {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        font-size: calc(1.2 * 2vw);
+        margin-left: 70%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <!--copy to every page-->
+      <div class="tab">
+        <img class="logo" src="tifr-logo-black.png" alt="" />
 
-.right{ width: 50vw;}
+        <div class="steps">
+          <div class="step">
+            <img src="sky.webp" />
+            <span>Reality</span>
+          </div>
 
-p{
-margin-top: 15*0.125vw;
-font-size: 1*2vw;
-}
+          <div class="step">
+            <img src="2.webp" />
+            <span>Idealization</span>
+          </div>
 
+          <div class="step active">
+            <img src="3.webp" />
+            <span>Discretisation</span>
+          </div>
 
-#disc{
-z-index: 1;
-}
+          <div class="step">
+            <img src="4.webp" />
+            <span>Geometry</span>
+          </div>
 
-#label{
-z-index: 2;
-pointer-events: none;
-}
+          <div class="step">
+            <img src="5.webp" alt="" />
+            <span>Algebra</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="container">
+        <div class="left">
+          <p>
+            The motion of a falling object under gravity and air drag is described by:
 
+            $$
+            \frac{dv}{dt} = g - \frac{k}{m}v^2
+            $$
 
-/*from her*/
-.latexLabels{
-position: absolute;
-transform: translate(-50%, -50%);
-font-size: 1.2*2vw;
-margin-left: 70%;
-}
+            To simulate it numerically, we discretise time into small steps \(∆t\) and update the velocity as:
 
-</style>
-	</head><body>
-        <div class="main">
+            $$
+            v_{n+1} = v_n + \Delta t \left(g - \frac{k}{m}v_n^2\right)
+            $$
 
-                <!--copy to every page-->
-        <div class="tab">
-                <img class="logo" src="tifr-logo-black.png" alt="">
+            At terminal velocity, acceleration becomes zero:
 
-<div class="steps">
-                                                                        <div class="step">
-    <img src="sky.webp">
-    <span>Reality</span>
-  </div>
+            So the update can also be written as:
 
-  <div class="step">
-    <img src="2.webp">
-    <span>Idealization</span>
-  </div>
-
-  <div class="step active">
-  	<img src="3.webp">
-	<span>Discretisation</span>
-  </div>
-
-  <div class="step">
-    <img src="4.webp">
-    <span>Geometry</span>
-  </div>
-
-  <div class="step">
-        <img src="5.webp" alt="">                                           <span>Algebra</span>
-  </div>
-
-</div>  </div>
-
-	<div class="container">
-
-		<div class="left">
-
-<p>The motion of a falling object under gravity and air drag is described by:
-
-$$
-\frac{dv}{dt} = g - \frac{k}{m}v^2
-$$
-
-To simulate it numerically, we discretise time into small steps \(∆t\) and update the velocity as:
-
-$$
-v_{n+1} = v_n + \Delta t \left(g - \frac{k}{m}v_n^2\right)
-$$
-
-At terminal velocity, acceleration becomes zero:
-
-So the update can also be written as:
-
-$$
-v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)
-$$
-
-</p>
-<input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">		
-	<button id="nextButton">Continue</button>
-
-		</div>
-		<div class="right" id="right" >
-			<div class="canvas-wrapper">
-				<div id="disc">
-	<script src="disc.js" defer></script>
-	<script src="d1.js"defer></script>
-
-</div>
-			<div id="label"> 
-			<div class="latexLabels" id="vn"> $$v_n$$</div>
-			<div class="latexLabels" id="vn1">$$v_{n+1}$$</div>
-			<div class="latexLabels" id="vn2">$$v_{n+2}$$</div>
-			<div class="latexLabels" id="vn3">$$v_{n+3}$$</div>
-			<div class="latexLabels" id="vn4">$$v_{n+4}$$</div>
-
-
-			
-
-</div>
-
-
-</div>
-
-
-</div>
-</div>
-</div>
-</div>
-
-
-</div>
-</body>
+            $$
+            v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)
+            $$
+          </p>
+          <input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider" />
+          <button id="nextButton">Continue</button>
+        </div>
+        <div class="right" id="right">
+          <div class="canvas-wrapper">
+            <div id="disc">
+              <script src="disc.js" defer></script>
+              <script src="d1.js" defer></script>
+            </div>
+            <div id="label">
+              <div class="latexLabels" id="vn">$$v_n$$</div>
+              <div class="latexLabels" id="vn1">$$v_{n+1}$$</div>
+              <div class="latexLabels" id="vn2">$$v_{n+2}$$</div>
+              <div class="latexLabels" id="vn3">$$v_{n+3}$$</div>
+              <div class="latexLabels" id="vn4">$$v_{n+4}$$</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,131 +1,135 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		  <meta charset="UTF-8">
-		    <title>Idealization</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Idealization</title>
 
-		      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="style.css">
-<style>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .right {
+        position: relative;
+        display: flex;
+      }
 
+      .temp {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: calc(20 * 0.125vw);
+        width: 100%;
+      }
 
-.right {
-    position: relative;
-    display: flex;
-}
+      .canvas-wrapper {
+        position: relative;
+        width: 25vw;
+        height: calc(80vh - 180 * 0.125vw);
+        flex-shrink: 0;
+      }
 
-.temp {
-    display: flex;
-    flex-direction: row;          
-    align-items: flex-start;
-    gap: 20*0.125vw;                  
-    width: 100%;
-}
+      #ideal,
+      #real {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
 
-.canvas-wrapper {
-    position: relative;           
-    width: 25vw;                  
-    height: calc(80vh - 180*0.125vw);                
-    flex-shrink: 0;               
-}
+      .black {
+        width: 20vw;
+        height: 20vw;
+        background: #333;
+        margin: calc(30 * 0.125vw) auto;
+        opacity: 0.9;
+        flex: 1;
+      }
 
-#ideal, #real {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;                  
-    height: 100%;
-}
+      .slider {
+        margin-top: calc(2vw);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <!--copy to every page-->
+      <div class="tab">
+        <img class="logo" src="tifr-logo-black.png" alt="" />
 
-.black {
-    width: 20vw;
-    height: 20vw;
-    background: #333;
-    margin: 30*0.125vw auto;
-    opacity: 0.9;
-    flex: 1;                      }
+        <div class="steps">
+          <div class="step">
+            <img src="sky.webp" />
+            <span>Reality</span>
+          </div>
 
+          <div class="step active">
+            <img src="2.webp" />
+            <span>Idealization</span>
+          </div>
 
-.slider{
-margin-top: 1*2vw;
-}
+          <div class="step">
+            <img src="3.webp" />
+            <span>Discretisation</span>
+          </div>
 
+          <div class="step">
+            <img src="4.webp" />
+            <span>Geometry</span>
+          </div>
 
+          <div class="step">
+            <img src="5.webp" alt="" />
+            <span>Algebra</span>
+          </div>
+        </div>
+      </div>
 
-</style>
-	</head><body>
-        <div class="main">
-
-                <!--copy to every page-->
-        <div class="tab">
-                <img class="logo" src="tifr-logo-black.png" alt="">
-
-<div class="steps">
-                                                                        <div class="step">
-    <img src="sky.webp">
-    <span>Reality</span>
-  </div>
-
-  <div class="step active">
-    <img src="2.webp">
-    <span>Idealization</span>
-  </div>
-
-  <div class="step">
-        <img src="3.webp">                                      <span>Discretisation</span>
-  </div>
-
-
-  <div class="step">
-    <img src="4.webp">
-    <span>Geometry</span>
-  </div>
-
-  <div class="step">
-        <img src="5.webp" alt="">                                           <span>Algebra</span>
-  </div>
-
-</div>  </div>
-
-	<div class="container">
-
-		<div class="left">
-			
-			<div class="top">
-<p>Consider a small raindrop falling from thousands of meters above the ground.</p>
-<div id="qwert"><p><ul><li>We strip away details that are unnecessary for solving the problem.
-                </li></ul></p></div>                           
-		<div id="qwer"><p> <ul><li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li> </ul></p>                                                   </div>
-<label for="slider">Drag the slider to view the process of idealization</label>
-<input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" >
-		</div>
-		</div>
-		<div class="right" id="right" >
-			<div class = "temp">
-			<div class="canvas-wrapper">
-			<div id="real"></div>
-			<div id="ideal"></div>
-			</div>
-<script src="i2003.js" defer></script>
-<script src="i2004.js" defer></script>
-<script src="i2002.js" defer></script>
-<script src="i2001.js" defer></script>
-<script src="ideal1left.js" defer></script>
-<script src="black.js" defer></script>
-<div class="black" id="black">
-<p>To mathematically model the variation of velocity of a body moving through a medium ,let us idealise the system.</p>
-<div>
-	<button id="nextButton">Let's idealise the system</button>
-
-	</div>
-</div>
-			</div>
-</div>
-
-</div>
-</div>
-</body>
+      <div class="container">
+        <div class="left">
+          <div class="top">
+            <p>Consider a small raindrop falling from thousands of meters above the ground.</p>
+            <div id="qwert">
+              <p>
+              <ul>
+                <li>We strip away details that are unnecessary for solving the problem.</li>
+              </ul>
+              </p>
+            </div>
+            <div id="qwer">
+              <p>
+              <ul>
+                <li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li>
+              </ul>
+              </p>
+            </div>
+            <label for="slider">Drag the slider to view the process of idealization</label>
+            <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" />
+          </div>
+        </div>
+        <div class="right" id="right">
+          <div class="temp">
+            <div class="canvas-wrapper">
+              <div id="real"></div>
+              <div id="ideal"></div>
+            </div>
+            <script src="i2003.js" defer></script>
+            <script src="i2004.js" defer></script>
+            <script src="i2002.js" defer></script>
+            <script src="i2001.js" defer></script>
+            <script src="ideal1left.js" defer></script>
+            <script src="black.js" defer></script>
+            <div class="black" id="black">
+              <p>To mathematically model the variation of velocity of a body moving through a medium ,let us idealise the system.</p>
+              <div>
+                <button id="nextButton">Let's idealise the system</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
