@@ -1,42 +1,24 @@
+document.addEventListener("DOMContentLoaded", function () {
+  let realSketch = function (p) {
+    let img;
 
-let realSketch = function(p){
+    p.preload = function () {
+      img = p.loadImage('sky.jpg');
+    };
 
-let lines = [];
-p.setup = function(){
-let rightDiv= document.getElementById("real");
-let canvas=p.createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);  canvas.parent("real");
-p.textAlign(p.CENTER,p.CENTER)
-for(let i = 0;i<100;i++){
-        lines.push({
-x: p.random(p.width),
-y: p.random(p.height),
-len: p.random(20,50),
-speed: p.random(10,20)
-        });
-}
-}
+    p.setup = function () {
+      let rightDiv = document.getElementById("real");
+      let w = rightDiv.offsetWidth || 600;
+      let h = rightDiv.offsetHeight || 400;
+      let canvas = p.createCanvas(w, h);
+      canvas.parent("real");
+    };
 
-let dropx;
-let dropy;
+    p.draw = function () {
+      p.background(80, 160, 200);
+      if (img) p.image(img, 0, 0, p.width, p.height);
+    };
+  };
 
-
-
-p.draw =function(){
-p.background(80,160,200);
-
-p.textSize(64);
-p.text("💧" , p.width/2, p.height/2)
-for(let l of lines){
-p.stroke(255);
-p.strokeWeight(2);
-p.line(l.x,l.y,l.x,l.y+l.len);
-l.y -= l.speed;
-
-        if(l.y<0){l.y=p.height;}
-
-}
-};
-};
-new p5(realSketch);
-
-
+  new p5(realSketch);
+});

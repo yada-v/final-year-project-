@@ -1,4 +1,3 @@
-
 let t;
 function setup() {
         let rightDiv = document.getElementById("canvas-wrapper");

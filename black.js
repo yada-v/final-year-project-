@@ -1,4 +1,5 @@
 /// <reference types="p5/global" />
+/// <reference types="p5/global" />
 window.addEventListener("load", () => {
 let slider = document.getElementById("slider");
 let box = document.getElementById("black");
@@ -14,3 +15,4 @@ if (t<0.85) {
 update();
 slider.addEventListener("input",update);
 });
+

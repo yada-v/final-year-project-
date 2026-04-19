@@ -1,99 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Why Raindrops Don't Hurt</title>
-    <meta charset="UTF-8" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .right img {
-        border-radius: 5%;
-        border: calc(4 * 0.125vw) solid #999;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Why Raindrops Don't Hurt</title>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main">
 
-      .images_y {
-        display: flex;
-        flex-direction: column;
-        gap: calc(10 * 0.125vw);
-      }
-
-      p {
-        margin-top: calc(2vw);
-        font-size: calc(2vw);
-      }
-
-      .row {
-        display: flex;
-        gap: calc(10 * 0.125vw);
-        justify-content: center;
-      }
-
-      .op {
-        width: 24vw;
-        height: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <!--copy to every page-->
-      <div class="tab">
-        <img class="logo" src="tifr-logo-black.png" alt="" />
-
-        <div class="steps">
-          <div class="step active">
-            <img src="sky.webp" />
-            <span>Reality</span>
-          </div>
-
-          <div class="step">
-            <img src="2.webp" />
-            <span>Idealization</span>
-          </div>
-
-          <div class="step">
-            <img src="3.webp" />
-            <span>Discretisation</span>
-          </div>
-
-          <div class="step">
-            <img src="4.webp" />
-            <span>Geometry</span>
-          </div>
-
-          <div class="step">
-            <img src="5.webp" alt="" />
-            <span>Algebra</span>
-          </div>
-        </div>
+  <!-- NAVIGATION STEPS -->
+  <div class="tab">
+    <img class="logo" src="tifr-logo-black.png" alt="TIFR">
+    <div class="steps">
+      <div class="step active">
+        <img src="sky.webp"><span>Reality</span>
       </div>
-
-      <div class="container">
-        <div class="left">
-          <div class="top">
-            <p>Why doesn't it hurt when a raindrop falls on you from thousands of meters?</p>
-            <p>similarly:</p>
-            <p>Why doesn't a skydiver keep accelerating forever even though gravity keeps pulling them down?</p>
-            <p>A mathematical model helps answer this.</p>
-          </div>
-        </div>
-        <div class="right" id="right">
-          <div class="images_y">
-            <div class="row">
-              <img class="op" src="rain.webp" />
-              <img class="op" src="sky.webp" />
-            </div>
-            <button id="nextButton">To answer these questions, let us mathematically model these systems !</button>
-          </div>
-        </div>
+      <div class="step">
+        <img src="2.webp"><span>Idealization</span>
+      </div>
+      <div class="step">
+        <img src="3.webp"><span>Discretisation</span>
+      </div>
+      <div class="step">
+        <img src="4.webp"><span>Geometry</span>
+      </div>
+      <div class="step">
+        <img src="5.webp"><span>Algebra</span>
       </div>
     </div>
-    <script>
-      document.getElementById("nextButton").onclick = function () {
-        window.location.href = "ideal.html";
-      };
-    </script>
-  </body>
+  </div>
+
+  <div class="container">
+
+    <!-- LEFT PANEL – EXPLANATION -->
+    <div class="left">
+
+<h2>Reality Question</h2>
+      <p>                                                 
+Why doesn't it hurt when a raindrop falls on you from thousands of meters?</p> <p> similarly:</p>
+<p> Why doesn't a skydiver keep accelerating forever even though
+ gravity keeps pulling them down?</p>     
+      <p>A mathematical model helps answer this.</p>
+
+
+    </div>
+
+    <!-- RIGHT PANEL – IMAGES + BUTTON -->
+    <div class="right">
+      <div class="images_y">
+        <div class="row">
+          <img class="op" src="rain.webp" alt="Raindrop">
+          <img class="op" src="sky.webp" alt="Clouds">
+        </div>
+        <button id="nextButton">
+          To answer these questions, let us mathematically model these systems !
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById("nextButton").onclick = function () {
+    window.location.href = "ideal.html";
+  };
+</script>
+</body>
 </html>

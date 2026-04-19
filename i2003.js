@@ -1,33 +1,54 @@
-let idealSketch = function(p){                                                                                        let lines = [];
-p.setup = function(){
-let rightDiv= document.getElementById("ideal");            
-let canvas=p.createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
-canvas.parent("ideal");                       
-p.textAlign(p.CENTER,p.CENTER)            
-for(let i = 0;i<100;i++){
-lines.push({
-x: p.random(p.width),
-y: p.random(p.height),
-len: p.random(20,50),                                              
-speed: p.random(10,20)                                                      
-});
-}
+let img;
+
+function preload() {
+  img = loadImage('sky.webp');
 }
 
+let t;
 
-let dropx;
-let dropy;
+function setup() {
+  let rightDiv = document.getElementById("canvas-wrapper");
+  // Use the smaller dimension for a square canvas
+  let size = Math.min(rightDiv.clientWidth, rightDiv.clientHeight);
+  size = Math.max(size, 300);
+  let canvas = createCanvas(size, size, WEBGL);
+  canvas.parent('canvas-wrapper');
+}
 
-p.draw =function(){
-p.background(80,160,200);
-p.circle(p.width/2,p.height/2,37.5);
 
-for(let l of lines){
-p.stroke(255);
-p.strokeWeight(2);
-p.line(l.x,l.y,l.x,l.y+l.len);
-l.y -= l.speed;
+let circles = [];
 
-        if(l.y<0){l.y=p.height;}
-}}};
-new p5(idealSketch);
+    textAlign(CENTER, CENTER);
+
+    for(let i = 0; i < 30; i++){
+      circles.push({
+        x: random(width),
+        y: random(-height, 0),   // start above screen
+        speed: random(3, 8)
+      });
+    }
+
+  draw = function(){
+    background(80,160,200);
+
+    // optional central object
+
+    for(let c of circles){
+      circle(c.x, c.y, 37.5);
+
+      c.y += c.speed;   // move DOWN
+
+      if(c.y > height){
+        c.y = random(-50, 0);   // reset to top
+        c.x = random(width);  // new random x
+      }
+    }
+  }
+
+function windowResized() {
+  let rightDiv = document.getElementById("canvas-wrapper");
+  let size = Math.min(rightDiv.clientWidth, rightDiv.clientHeight);
+  size = Math.max(size, 300);
+  resizeCanvas(size, size);
+}
+

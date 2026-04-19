@@ -1,142 +1,198 @@
 /// <reference types="p5/global" />
 
+let slider;
+let canvas;
 
-function setup(){
-let rightDiv = document.getElementById("igraph");
-let canvas = createCanvas(rightDiv.clientWidth*0.97, rightDiv.clientHeight);
-canvas.parent("igraph");
+function setup() {
+  const container = document.getElementById("igraph");
+  canvas = createCanvas(container.clientWidth * 0.97, container.clientHeight);
+  canvas.parent("igraph");
+  slider = document.getElementById("slider");
 }
 
-function arrow(x1,y1,x2,y2 , arrowSize = 10){
-line(x1,y1,x2,y2);
-
-push();
-let angle = atan2( y2 - y1, x2 - x1 );
-translate(x2,y2);
-rotate(angle);
-
-
-noFill();
-triangle(0, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
-
-
-pop();
-
+function windowResized() {
+  const container = document.getElementById("igraph");
+  resizeCanvas(container.clientWidth * 0.97, container.clientHeight);
 }
 
-
-let h;
-
-function draw(){
-background(255);
-translate(width/2, height/2);
-
-let t = parseFloat(document.getElementById("slider").value);
-
-//mg
-strokeWeight(3);
-let qw = color(230,57,70);
-stroke(qw);
-arrow(0, 0,0,height/3 );
-
-textSize(20);
-strokeWeight(1);
-textAlign(CENTER,BOTTOM);
-noStroke();
-fill(qw);
-text("Gravity",0,height/3 + 30);
-
-
-//drag
-let length = t*height/3;
-strokeWeight(3);
-let we = color(42, 157, 143);
-stroke(we);
-arrow(0, 0,0,-1*length );
-
-textSize(20);
-strokeWeight(1);
-textAlign(CENTER,TOP);
-noStroke();
-fill(we);
-if (t==1) {
-        text("Drag = Gravity",0,-1*length - height/10);
-} if(t==0) {
-        text("Drag = 0",0, -1*length - height/10);
-} if(t>0 && t<1){
-	text("Drag", 0, -1*length - height/10);
+function arrow(x1, y1, x2, y2, arrowSize = 10) {
+  line(x1, y1, x2, y2);
+  push();
+  const angle = atan2(y2 - y1, x2 - x1);
+  translate(x2, y2);
+  rotate(angle);
+  noFill();
+  triangle(0, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
+  pop();
 }
 
-//obj
-fill(60,70,90);
-stroke(100,150,255,180);
-strokeWeight(1);
-circle(0,0,height/10);
+function draw() {
+  background(255);
+  
+  // Center coordinate system
+  translate(width / 2, height / 2);
 
-//Net force
+  const t = parseFloat(slider.value);  // 0 → 1
 
-if (t==1) {
-	h=0;
-} else {
-	h=220;
-}
-let up = (1-t)*height/3;
-strokeWeight(3);
-let col = color(69, 123, 157,h);
-stroke(col);
-arrow(width/4, -1*up, width/4, up);
+  // ---- Diagram Scaling and Positioning ----
+  // Adjust these constants to fit your visual layout
+  const plateWidth = width * 0.4;
+  const plateHeight = height * 0.04;
+  const fluidGap = height * 0.25;
+  const plateYOffset = fluidGap / 2 + plateHeight / 2;
 
-textSize(20);
-strokeWeight(1);
-textAlign(LEFT,BOTTOM);
-noStroke();
-let col1 = color(69, 123, 157);
-fill(col1);
-if (t==1) {
-	text("Net Force\n    = 0",width/4 + 20,0 + up);
-} else {
-	text("Net Force",width/4 + 20,0 + up);
-}
+  // ---- 1. Draw the Metal Plates (Sandwiching the Fluid) ----
+  push();
+  // Top Plate
+  fill(180); // Light gray metallic
+  stroke(100);
+  strokeWeight(2);
+  rectMode(CENTER);
+  rect(0, -plateYOffset, plateWidth, plateHeight);
+  // Label
+  fill(0);
+  noStroke();
+  textAlign(CENTER, BOTTOM);
+  textSize(16);
+  text("Top Metal Plate", 0, -plateYOffset - plateHeight/2 - 5);
 
-//velocity
-let d = t*height/3;
-let e;
-if (t==0) {
-	e=0;
-} else {
-	e=255;
-}
-strokeWeight(3);
+  // Bottom Plate
+  fill(180);
+  stroke(100);
+  strokeWeight(2);
+  rect(0, plateYOffset, plateWidth, plateHeight);
+  // Label
+  fill(0);
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(16);
+  text("Bottom Metal Plate", 0, plateYOffset + plateHeight/2 + 5);
+  pop();
 
-let er = color(76, 175, 80,e);
-let er1 = color(76, 175, 80);
-stroke(er);
-arrow(-1*width/5, -0.7*d, -1*width/5, 0.7*d);
+  // ---- 2. Indicate the Fluid (Oil) Layer ----
+  push();
+  // Dashed lines to indicate fluid boundaries (optional)
+  drawingContext.setLineDash([5, 5]);
+  stroke(150);
+  strokeWeight(1);
+  line(-plateWidth/2, -fluidGap/2, plateWidth/2, -fluidGap/2);
+  line(-plateWidth/2, fluidGap/2, plateWidth/2, fluidGap/2);
+  drawingContext.setLineDash([]);
+  
+  // Fluid label
+  fill(0);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text("Oil (Viscous Fluid)", 0, 0);
+  
+  // Light blue tint for fluid area (optional)
+  fill(173, 216, 230, 50);
+  noStroke();
+  rectMode(CENTER);
+  rect(0, 0, plateWidth, fluidGap);
+  pop();
 
-textSize(20);
-strokeWeight(1);
-textAlign(RIGHT,BOTTOM);
-noStroke();
-fill(er1);
-if (t>0 && t<1) {
-	text("Velocity", -1*width/5 - 20, 0.7*d);
-}
-if(t==0){
-	text("Velocity = 0", -1*width/5 - 20, 0.7*d);
-	}
+  // ---- 3. Object Inside Fluid (The Falling Sphere) ----
+  // The sphere is the object experiencing drag.
+  // Its position can be animated, but for simplicity, we keep it centered.
+  const sphereRadius = fluidGap * 0.3;
+  push();
+  fill(60, 70, 90);
+  stroke(100, 150, 255, 180);
+  strokeWeight(1);
+  circle(0, 0, sphereRadius * 2);
+  
+  // Label for the object
+  fill(0);
+  noStroke();
+  textAlign(CENTER, TOP);
+  textSize(14);
+  text("Sphere (object)", 0, sphereRadius + 5);
+  pop();
 
-if(t==1){
-        text(" Terminal\nVelocity", -1*width/5 - 20, 0.7*d);
-        }
-//back to normal
-translate(-width/2,-height/2);
+  // ---- 4. Forces (Vectors) ----
+  // Gravity (downward)
+  const gravityLength = fluidGap * 0.6;
+  strokeWeight(3);
+  const gravityColor = color(230, 57, 70);
+  stroke(gravityColor);
+  arrow(0, 0, 0, gravityLength);
+  textSize(18);
+  strokeWeight(1);
+  textAlign(CENTER, TOP);
+  noStroke();
+  fill(gravityColor);
+  text("Gravity", 0, gravityLength + 20);
 
-textAlign(LEFT,TOP);
-let time = (5*t).toFixed(2);
-stroke(0,0,0);
-textSize(25);
-fill(0,0,0)
-text("t = " + time,10,10);
+  // Drag (upward, depends on t)
+  const dragLength = t * fluidGap * 0.6;
+  strokeWeight(3);
+  const dragColor = color(42, 157, 143);
+  stroke(dragColor);
+  arrow(0, 0, 0, -dragLength);
+  textSize(18);
+  strokeWeight(1);
+  textAlign(CENTER, BOTTOM);
+  noStroke();
+  fill(dragColor);
+  if (t === 1) {
+    text("Drag = Gravity", 0, -dragLength - 20);
+  } else if (t === 0) {
+    text("Drag = 0", 0, -dragLength - 20);
+  } else {
+    text("Drag", 0, -dragLength - 20);
+  }
 
+  // Net force (upward, difference)
+  const netUp = (1 - t) * fluidGap * 0.6;
+  strokeWeight(3);
+  const netAlpha = t === 1 ? 0 : 220;
+  const netColor = color(69, 123, 157, netAlpha);
+  stroke(netColor);
+  arrow(width / 4, -netUp, width / 4, netUp);
+  textSize(18);
+  strokeWeight(1);
+  textAlign(LEFT, BOTTOM);
+  noStroke();
+  fill(69, 123, 157);
+  if (t === 1) {
+    text("Net Force\n    = 0", width / 4 + 20, netUp);
+  } else {
+    text("Net Force", width / 4 + 20, netUp);
+  }
 
+  // Velocity (upward, depends on t)
+  const velLength = t * fluidGap * 0.6;
+  const velAlpha = t === 0 ? 0 : 255;
+  strokeWeight(3);
+  const velColor = color(76, 175, 80, velAlpha);
+  stroke(velColor);
+  arrow(-width / 5, -0.7 * velLength, -width / 5, 0.7 * velLength);
+  textSize(18);
+  strokeWeight(1);
+  textAlign(RIGHT, BOTTOM);
+  noStroke();
+  fill(76, 175, 80);
+  if (t > 0 && t < 1) {
+    text("Velocity", -width / 5 - 20, 0.7 * velLength);
+  } else if (t === 0) {
+    text("Velocity = 0", -width / 5 - 20, 0.7 * velLength);
+  } else if (t === 1) {
+    text("Terminal\nVelocity", -width / 5 - 20, 0.7 * velLength);
+  }
+
+  // ---- 5. Time Display ----
+  translate(-width / 2, -height / 2);
+  textAlign(LEFT, TOP);
+  const timeValue = (5 * t).toFixed(2);
+  fill(0);
+  noStroke();
+  textSize(22);
+  text("t = " + timeValue, 10, 10);
+  
+  // Title for the simulation
+  textAlign(RIGHT, TOP);
+  textSize(18);
+  text("Drag in a Viscous Fluid", width - 10, 10);
 }

@@ -1,4 +1,5 @@
 /// <reference types="p5/global" />
+/// <reference types="p5/global" />
 document.addEventListener("DOMContentLoaded", function () {
 let slider = document.getElementById("slider");
 let qwert = document.getElementById("qwert");
@@ -22,3 +23,4 @@ if (t<0.66) {
 update();
 slider.addEventListener("input", update);
 });
+

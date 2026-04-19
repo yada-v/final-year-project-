@@ -1,135 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Idealization</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Idealization — Why Raindrops Don't Hurt</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .right {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: calc(20 * 0.125vw);                    /* fixed */
+      gap: calc(20 * 0.125vw);                        /* fixed */
+    }
+    #canvas-wrapper {
+      width: 50%;
+      height: calc(100vh - calc(180 * 0.125vw));      /* fixed */
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .black {
+      flex: 1;
+      max-width: calc(340 * 0.125vw);                 /* fixed */
+      height: auto;
+      align-self: center;
+    }
+    .black p {
+      font-size: calc(0.0186 * 100vw);                  /* fixed */
+    }
+  </style>
+</head>
+<body>
+<div class="main">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .right {
-        position: relative;
-        display: flex;
-      }
-
-      .temp {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        gap: calc(20 * 0.125vw);
-        width: 100%;
-      }
-
-      .canvas-wrapper {
-        position: relative;
-        width: 25vw;
-        height: calc(80vh - 180 * 0.125vw);
-        flex-shrink: 0;
-      }
-
-      #ideal,
-      #real {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .black {
-        width: 20vw;
-        height: 20vw;
-        background: #333;
-        margin: calc(30 * 0.125vw) auto;
-        opacity: 0.9;
-        flex: 1;
-      }
-
-      .slider {
-        margin-top: calc(2vw);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <!--copy to every page-->
-      <div class="tab">
-        <img class="logo" src="tifr-logo-black.png" alt="" />
-
-        <div class="steps">
-          <div class="step">
-            <img src="sky.webp" />
-            <span>Reality</span>
-          </div>
-
-          <div class="step active">
-            <img src="2.webp" />
-            <span>Idealization</span>
-          </div>
-
-          <div class="step">
-            <img src="3.webp" />
-            <span>Discretisation</span>
-          </div>
-
-          <div class="step">
-            <img src="4.webp" />
-            <span>Geometry</span>
-          </div>
-
-          <div class="step">
-            <img src="5.webp" alt="" />
-            <span>Algebra</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="left">
-          <div class="top">
-            <p>Consider a small raindrop falling from thousands of meters above the ground.</p>
-            <div id="qwert">
-              <p>
-              <ul>
-                <li>We strip away details that are unnecessary for solving the problem.</li>
-              </ul>
-              </p>
-            </div>
-            <div id="qwer">
-              <p>
-              <ul>
-                <li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li>
-              </ul>
-              </p>
-            </div>
-            <label for="slider">Drag the slider to view the process of idealization</label>
-            <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" />
-          </div>
-        </div>
-        <div class="right" id="right">
-          <div class="temp">
-            <div class="canvas-wrapper">
-              <div id="real"></div>
-              <div id="ideal"></div>
-            </div>
-            <script src="i2003.js" defer></script>
-            <script src="i2004.js" defer></script>
-            <script src="i2002.js" defer></script>
-            <script src="i2001.js" defer></script>
-            <script src="ideal1left.js" defer></script>
-            <script src="black.js" defer></script>
-            <div class="black" id="black">
-              <p>To mathematically model the variation of velocity of a body moving through a medium ,let us idealise the system.</p>
-              <div>
-                <button id="nextButton">Let's idealise the system</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="tab">
+    <img class="logo" src="tifr-logo-black.png" alt="TIFR">
+    <div class="steps">
+      <div class="step done"><img src="sky.webp"><span>Reality</span></div>
+      <div class="step active"><img src="2.webp"><span>Idealization</span></div>
+      <div class="step"><img src="3.webp"><span>Discretisation</span></div>
+      <div class="step"><img src="4.webp"><span>Geometry</span></div>
+      <div class="step"><img src="5.webp"><span>Algebra</span></div>
     </div>
-  </body>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      <h2>Idealization</h2>
+
+<p>Consider a small raindrop falling from thousands of meters ab
+ove the ground.</p>
+      <ul id="qwert" style="opacity:0; transition: opacity 0.5s;">
+ <li>We strip away details that are unnecessary for solving the problem.</li>
+      </ul>
+      <div id="qwer" style="opacity:0; transition: opacity 0.5s;">
+	      <ul>
+<li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li>
+
+	      </ul>
+      </div>
+      <label for="slider">Drag to explore idealization</label>
+      <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider">
+      <button id="nextButton" style="opacity:0; transition: opacity 0.5s;">Next →</button>
+    </div>
+
+    <div class="right">
+      <div id="canvas-wrapper"></div>
+    </div>
+  </div>
+</div>
+
+<script src="i2003.js"></script>
+<script src="i2001.js" defer></script>
+<script src="ideal1left.js" defer></script>
+<script>
+  window.addEventListener("load", () => {
+    const s = document.getElementById("slider");
+    const btn = document.getElementById("nextButton");
+    const qwert = document.getElementById("qwert");
+    const qwer  = document.getElementById("qwer");
+
+    function update() {
+      const t = parseFloat(s.value);
+      btn.style.opacity  = t;
+      qwert.style.opacity = t >= 0.33 ? 1 : 0;
+      qwer.style.opacity  = t >= 0.66 ? 1 : 0;
+    }
+
+    update();
+    s.addEventListener("input", update);
+
+    btn.addEventListener("click", () => {
+      window.location.href = "discretisation.html";
+    });
+  });
+</script>
+</body>
 </html>

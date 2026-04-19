@@ -1,108 +1,70 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Geometrization</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geometry — Why Raindrops Don't Hurt</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .right {
+      align-items: center;
+      justify-content: center;
+    }
+    #canvas-wrapper {
+      position: relative;
+      width: 60vw;
+      height: calc(100vh - calc(140 * 0.125vw));   /* fixed */
+    }
+    #graph {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    #abc1, #abc2, #abc3 {
+    transition: opacity 0.2s ease;
+}
+  </style>
+</head>
+<body>
+<div class="main">
 
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .right {
-        position: relative;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+  <div class="tab">
+    <img class="logo" src="tifr-logo-black.png" alt="TIFR">
+    <div class="steps">
+      <div class="step done"><img src="sky.webp"><span>Reality</span></div>
+      <div class="step done"><img src="2.webp"><span>Idealization</span></div>
+      <div class="step done"><img src="3.webp"><span>Discretisation</span></div>
+      <div class="step active"><img src="4.webp"><span>Geometry</span></div>
+      <div class="step"><img src="5.webp"><span>Algebra</span></div>
+    </div>
+  </div>
 
-      .canvas-wrapper {
-        position: relative;
-        width: 60vw;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+  <div class="container">
+    <div class="left">
 
-      #graph,
-      #label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 60vw;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+<h2>Geometric Insight</h2>
 
-      .left {
-        width: 40vw;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+<p>The spacing between the dotted lines represents Δt, while the height represents the corresponding velocity           
+$$v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)$$    
+ As Δt → 0 (i.e., Δt → dt), the graph approaches a smooth continuous curve.</p>
+<label for="slider">Drag to explore the geometry</label>
+      <input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">
+      <button id="nextButton">Continue →</button>
+    </div>
 
-      .right {
-        width: 60vw;
-      }
-
-      p {
-        margin-top: calc(2vw);
-        font-size: calc(2vw);
-      }
-
-      #graph {
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <!--copy to every page-->
-      <div class="tab">
-        <img class="logo" src="tifr-logo-black.png" alt="" />
-
-        <div class="steps">
-          <div class="step">
-            <img src="sky.webp" />
-            <span>Reality</span>
-          </div>
-
-          <div class="step">
-            <img src="2.webp" />
-            <span>Idealization</span>
-          </div>
-
-          <div class="step">
-            <img src="3.webp" />
-            <span>Discretisation</span>
-          </div>
-
-          <div class="step active">
-            <img src="4.webp" />
-            <span>Geometry</span>
-          </div>
-
-          <div class="step">
-            <img src="5.webp" alt="" />
-            <span>Algebra</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="left">
-          <p>
-            The spacing between the dotted lines represents Δt, while the height represents the corresponding velocity
-
-            $$v_{n+1} = v_n + \Delta t \cdot g \left(1 - \frac{v_n^2}{v_t^2}\right)$$
-
-            . As Δt → 0 (i.e., Δt → dt), the graph approaches a smooth continuous curve.
-          </p>
-          <input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider" />
-          <button id="nextButton">Continue</button>
-        </div>
-        <div class="right" id="right">
-          <div class="canvas-wrapper">
-            <div id="graph">
-              <script src="geom.js" defer></script>
-              <script src="g1.js" defer></script>
-            </div>
-          </div>
+    <div class="right">
+      <div id="canvas-wrapper">
+        <div id="graph">
+          <script src="geom.js" defer></script>
+          <script src="g1.js" defer></script>
+	  <script src="g2.js" defer></script>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

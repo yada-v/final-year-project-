@@ -1,124 +1,114 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Algebra</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Algebra — Why Raindrops Don't Hurt</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .right {
+      align-items: center;
+      justify-content: center;
+      width: 40vw;
+    }
+    .left {
+      width: 60vw;
+    }
+    #canvas-wrapper {
+      position: relative;
+      width: 40vw;
+      height: calc(100vh - calc(140 * 0.078vh));   /* fixed */
+    }
+    #graph, #label {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+    #graph  { z-index: 1; }
+    #label  { z-index: 2; pointer-events: none; }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    .latexLabels {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-size: calc(0.01178 * 100vh);   /* fixed */
+      margin-left: 70%;
+    }
 
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .right {
-        position: relative;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+    .deriv-step {
+      background: #f8f8ff;
+      border-left: calc(3 * 0.078vh) solid #4A90E2;   /* fixed */
+      border-radius: 0 calc(6 * 0.078vh) calc(6 * 0.078vh) 0;
+      padding: calc(8 * 0.078vh) calc(14 * 0.078vh);
+      margin-top: calc(12 * 0.078vh);
+      font-size: calc(0.01178 * 100vh);   /* fixed */
+    }
 
-      .canvas-wrapper {
-        position: relative;
-        width: 60vw;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+    .deriv-step .step-label {
+      font-size: calc(0.01178 * 100vh);   /* fixed */
+      font-weight: 600;
+      color: #4A90E2;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: calc(4 * 0.078vh);
+    }
 
-      #graph,
-      #label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
+    .result-box {
+      margin-top: calc(14 * 0.078vh);
+      background: #e9f9f0;
+      border: calc(1.5 * 0.078vh) solid #198754;
+      border-radius: calc(8 * 0.078vh);
+      padding: calc(12 * 0.078vh) calc(16 * 0.078vh);
+      text-align: center;
+    }
 
-      .black {
-        width: calc(300 * 0.125vw);
-        height: calc(400 * 0.125vw);
-        background: #333;
-        margin: calc(30 * 0.125vw) auto;
-        opacity: 0.9;
-      }
+    .result-box .res-label {
+      font-size: calc(0.01178 * 100vh);
+      font-weight: 600;
+      color: #198754;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: calc(6 * 0.078vh);
+    }
+  </style>
+</head>
+<body>
+<div class="main">
 
-      .left {
-        width: 40vw;
-        height: calc(100vh - 180 * 0.125vw);
-      }
+  <div class="tab">
+    <img class="logo" src="tifr-logo-black.png" alt="TIFR">
+    <div class="steps">
+      <div class="step done"><img src="sky.webp"><span>Reality</span></div>
+      <div class="step done"><img src="2.webp"><span>Idealization</span></div>
+      <div class="step done"><img src="3.webp"><span>Discretisation</span></div>
+      <div class="step done"><img src="4.webp"><span>Geometry</span></div>
+      <div class="step active"><img src="5.webp"><span>Algebra</span></div>
+    </div>
+  </div>
 
-      .right {
-        width: 50vw;
-      }
+  <div class="container">
+    <div class="left">
 
-      p {
-        margin-top: calc(2vw);
-        font-size: calc(2vw);
-      }
 
-      #graph {
-        z-index: 1;
-      }
 
-      #label {
-        z-index: 2;
-        pointer-events: none;
-      }
+<h2>Algebraic Resolution</h2>
+<p>The drag force is given by $$F_d = \frac{1}{2} C_d A \rho v^2$$, where \(C_d\) is the drag coefficient, \(A\) is cross-sectional area, \(\rho\) is density of the medium, and \(v\) is velocity. The equation of motion is $$m \frac{dv}{dt} = mg - F_d$$. At termina
+l velocity, \(dv/dt = 0\), so \(mg = F_d\). Substituting the drag force and solving for \(v_t\) yields the terminal velocity: $$v_t = \sqrt{\frac{2mg}{C_d A \rho}}$$</p>
 
-      .latexLabels {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        font-size: calc(1.2 * 2vw);
-        margin-left: 70%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <!--copy to every page-->
-      <div class="tab">
-        <img class="logo" src="tifr-logo-black.png" alt="" />
+      <label for="slider">Drag to animate the derivation</label>
+      <input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider">
+      <button id="nextButton">↩ Back to Start</button>
+    </div>
 
-        <div class="steps">
-          <div class="step">
-            <img src="sky.webp" />
-            <span>Reality</span>
-          </div>
-
-          <div class="step">
-            <img src="2.webp" />
-            <span>Idealization</span>
-          </div>
-
-          <div class="step">
-            <img src="3.webp" />
-            <span>Discretisation</span>
-          </div>
-
-          <div class="step">
-            <img src="4.webp" />
-            <span>Geometry</span>
-          </div>
-
-          <div class="step active">
-            <img src="5.webp" alt="" />
-            <span>Algebra</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="left">
-          <p>
-            The drag force is given by $$F_d = \frac{1}{2} C_d A \rho v^2$$, where \(C_d\) is the drag coefficient, \(A\) is cross-sectional area, \(\rho\) is density of the medium, and \(v\) is velocity. The equation of motion is $$m \frac{dv}{dt} = mg - F_d$$. At terminal velocity, \(dv/dt = 0\), so \(mg = F_d\). Substituting the drag force and solving for \(v_t\) yields the terminal velocity: $$v_t = \sqrt{\frac{2mg}{C_d A \rho}}$$
-          </p>
-          <input type="range" id="slider" value="0" step="0.005" min="0" max="1" class="slider" />
-          <button id="nextButton">Back to Start</button>
-        </div>
-        <div class="right" id="right">
-          <div class="canvas-wrapper">
-            <div id="graph">
-              <script src="geom.js" defer></script>
-              <script src="a1.js" defer></script>
-            </div>
-          </div>
+    <div class="right">
+      <div id="canvas-wrapper">
+        <div id="graph">
+          <script src="alg.js" defer></script>
+          <script src="a1.js" defer></script>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

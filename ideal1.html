@@ -1,134 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Idealization</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Idealization — Why Raindrops Don't Hurt</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .right {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: calc(20 * 0.125vw);                    /* fixed */
+      gap: calc(20 * 0.125vw);                        /* fixed */
+    }
+    #canvas-wrapper {
+      width: 50%;
+      height: calc(100vh - calc(180 * 0.125vw));      /* fixed */
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .black {
+      flex: 1;
+      max-width: calc(340 * 0.125vw);                 /* fixed */
+      height: auto;
+      align-self: center;
+    }
+    .black p {
+      font-size: calc(0.0186 * 100vw);                  /* fixed */
+    }
+  </style>
+</head>
+<body>
+<div class="main">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .right {
-        width: 68%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .canvas-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: calc(24 * 0.125vw);
-        width: 100%;
-        padding: calc(10 * 0.125vw);
-      }
-      #igraph {
-        width: 33vw;
-        height: auto;
-        aspect-ratio: 1 / 0.9;
-        background: white;
-        border-radius: calc(24 * 0.125vw);
-        box-shadow: 0 calc(8 * 0.125vw) calc(20 * 0.125vw) rgba(0, 0, 0, 0.1);
-        flex-shrink: 0;
-      }
-      .black {
-        flex: 1;
-        width: calc(500 * 0.125vw);
-        height: calc(650 * 0.125vw);
-        background: #3A3C3F;
-        border-radius: calc(20 * 0.125vw);
-        padding: calc(20 * 0.125vw);
-        color: white;
-        font-size: calc(2vw);
-        margin: 0;
-        box-shadow: 0 calc(8 * 0.125vw) calc(20 * 0.125vw) rgba(0, 0, 0, 0.15);
-      }
-      .slider {
-        margin-top: calc(2vw);
-      }
-      p {
-        margin-top: calc(2vw);
-        font-size: calc(2vw);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <!--copy to every page-->
-      <div class="tab">
-        <img class="logo" src="tifr-logo-black.png" alt="" />
-
-        <div class="steps">
-          <div class="step">
-            <img src="sky.webp" />
-            <span>Reality</span>
-          </div>
-
-          <div class="step active">
-            <img src="2.webp" />
-            <span>Idealization</span>
-          </div>
-
-          <div class="step">
-            <img src="3.webp" />
-            <span>Discretisation</span>
-          </div>
-
-          <div class="step">
-            <img src="4.webp" />
-            <span>Geometry</span>
-          </div>
-
-          <div class="step">
-            <img src="5.webp" alt="" />
-            <span>Algebra</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="left">
-          <div class="top">
-            <ul>
-              <li>We strip away details that are unnecessary for solving the problem.</li>
-            </ul>
-            <label for="slider">Drag the slider to view the process of idealization</label>
-
-            <ul id="qwert">
-              <li>We idealize the raindrop as a small spherical object with constant mass.</li>
-              <li>We also assume the motion is one-dimensional (top to bottom), with no wind effects.</li>
-            </ul>
-            <ul>
-              <li id="qwer">Gravity speeds the object up while air resistance slows it down. When the forces balance, the net force is zero, so by inertia it continues at a constant terminal velocity.</li>
-            </ul>
-
-            <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider" />
-          </div>
-        </div>
-        <div class="right" id="right">
-          <div class="canvas-wrapper">
-            <div id="igraph"></div>
-
-            <script src="igraph.js" defer></script>
-            <script src="i2002.js" defer></script>
-            <script src="i2001.js" defer></script>
-            <script src="ideal1left.js" defer></script>
-            <script src="idealblack.js" defer></script>
-            <script src="i21.js" defer></script>
-            <div class="black" id="black">
-              <p>When you stick your hand slightly outside a car that is at rest, you don’t feel any force from the air. But when the car starts moving, you feel a push from the air in the direction opposite to the car’s motion. This push increases as the speed of the car increases.</p>
-              <p>A similar effect happens for objects falling through air. As an object falls, air exerts a drag force opposite to its motion. As the object’s speed increases, this drag force also increases.</p>
-              <p>At a certain point, the velocity of the object becomes high enough that the drag force equals its weight. At this point, the net force on the object becomes zero. From then on, the object continues to move with constant velocity due to inertia. This constant velocity is called terminal velocity.</p>
-              <div>
-                <button id="nextButton">Continue</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="tab">
+    <img class="logo" src="tifr-logo-black.png" alt="TIFR">
+    <div class="steps">
+      <div class="step done"><img src="sky.webp"><span>Reality</span></div>
+      <div class="step active"><img src="2.webp"><span>Idealization</span></div>
+      <div class="step"><img src="3.webp"><span>Discretisation</span></div>
+      <div class="step"><img src="4.webp"><span>Geometry</span></div>
+      <div class="step"><img src="5.webp"><span>Algebra</span></div>
     </div>
-  </body>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      <h2>Idealization</h2>
+
+<p>Consider a small raindrop falling from thousands of meters ab
+ove the ground.</p>
+      <ul id="qwert" style="opacity:0; transition: opacity 0.5s;">
+ <li>We strip away details that are unnecessary for solving the problem.</li>
+      </ul>
+      <div id="qwer" style="opacity:0; transition: opacity 0.5s;">
+	      <ul>
+<li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li>
+
+	      </ul>
+      </div>
+      <label for="slider">Drag to explore idealization</label>
+      <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="slider">
+      <button id="nextButton" style="opacity:0; transition: opacity 0.5s;">Next →</button>
+    </div>
+
+    <div class="right">
+      <div id="canvas-wrapper"></div>
+    </div>
+  </div>
+</div>
+
+<script src="i2003.js"></script>
+<script src="i2001.js" defer></script>
+<script src="ideal1left.js" defer></script>
+<script>
+  window.addEventListener("load", () => {
+    const s = document.getElementById("slider");
+    const btn = document.getElementById("nextButton");
+    const qwert = document.getElementById("qwert");
+    const qwer  = document.getElementById("qwer");
+
+    function update() {
+      const t = parseFloat(s.value);
+      btn.style.opacity  = t;
+      qwert.style.opacity = t >= 0.33 ? 1 : 0;
+      qwer.style.opacity  = t >= 0.66 ? 1 : 0;
+    }
+
+    update();
+    s.addEventListener("input", update);
+
+    btn.addEventListener("click", () => {
+      window.location.href = "discretisation.html";
+    });
+  });
+</script>
+</body>
 </html>

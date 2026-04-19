@@ -1,124 +1,152 @@
-/// <reference types="p5/global" />
-let rightDiv = document.getElementById("graph");
-function setup(){
-let canvas = createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
-canvas.parent("graph");
-}
+let t;
+let font;
 
-function arrow(x1,y1,x2,y2) {
-        line(x1,y1,x2,y2);
+function preload(){
 
-        push();
-        let angle = atan2(y2 - y1,x2 - x1);
-
-	let arrowSize = height/100;
-	let offset = arrowSize * 0.5;
-translate(
-  x2 - offset * cos(angle),
-  y2 - offset * sin(angle)
-);
-        rotate(angle);
-	fill(0);
-        noStroke();
-
-
-
-	triangle(height/80,0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
-
-        pop();
-
+font = loadFont('Inconsolata.otf');
 }
 
 
-function dottedLine(x1, y1, x2, y2, ) {
+function setup() {
+  let rightDiv = document.getElementById("canvas-wrapper");
+  let canvas = createCanvas(rightDiv.clientWidth, rightDiv.clientWidth, WEBGL);
+  canvas.parent('canvas-wrapper');
 
+	textFont(font);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+}
 
-	
- let spacing = 6;
-	push();
-	
-let d = dist(x1, y1, x2, y2);
+/* -------------------------
+   2D Arrow (in WEBGL XY plane)
+--------------------------*/
+function drawArrow2D(x1, y1, x2, y2, headSize = 10) {
+  push();
 
-  let steps = d / spacing;
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let angle = atan2(dy, dx);
+  let len = sqrt(dx * dx + dy * dy);
 
-  for (let i = 0; i <= steps; i++) {
-    let t = i / steps;
-    let x = lerp(x1, x2, t);
-    let y = lerp(y1, y2, t);
+  translate(x1, y1);
+  rotateZ(angle);
 
+  stroke(255);
+  strokeWeight(2);
+  line(0, 0, len - headSize, 0);
 
-    point(x, y);
+  noStroke();
+  translate(len - headSize, 0);
+  fill(255);
+  triangle(
+    0, 0,
+    -headSize, headSize / 2,
+    -headSize, -headSize / 2
+  );
 
-
-stroke(0,150,0,120);
-
-
-  }  pop();
-
-} 
-
-
-
-
-
-let slider = document.getElementById("slider");
-
-
-function draw(){
-background(255);
-
-let t = parseFloat(slider.value);
-
-
-noFill();
-
-let h = 1 - t + 0.01;
-strokeWeight(3);
-	beginShape();
-
-stroke(255,0,0);
-	for (let x = 0; x <= 10; x = x + 10*h/3) {
-		let y = 0.7*(1 - exp(-x/1));
-
-		let px = map(x, 0, 10, 50, width - 50);
-		let py = map(y, 0, 1, height - 50, 50);
-
-		vertex(px, py);
+  pop();
+}
 
 
 
-push();
-stroke(0,150,255,60);
-line(px,height-50,px,py);
-	pop();
-		
-	}
-let yLine = 0.3 * (height - 100) + 50 ;
-dottedLine(50, yLine, width - 50, yLine);
+function drawBarCaps(x1, y1, x2, y2, capSize = 2) {
+  push();
+  stroke(255,255,0);
+  strokeWeight(2);
 
-	endShape();
+  line(x1, y1, x2, y2);
+
+  // left cap
+  line(x1, y1 - capSize, x1, y1 + capSize);
+
+  // right cap
+  line(x2, y2 - capSize, x2, y2 + capSize);
+
+  pop();
+}
 
 
-//x-axis
-stroke(0);
-strokeWeight(2);
-arrow(50, height - 50, width - 40, height - 50);
-//y-axis
-stroke(0);
-arrow(50,height - 50, 50, 50);
-textAlign(CENTER,BOTTOM);
-	strokeWeight(1);
-	text("Time", width/2, height - 20);
-textAlign(CENTER,TOP);
-	text("Terminal Velocity", width/3, 3*height/10 - 20);
+
+
+
+function draw() {
+  background(50);
+
+  t = document.getElementById("slider");
+  let s = parseFloat(t.value);
+
+  let cx = 0;
+  let cy = -height / 10;
+
+
+  let Lscale = 120;
+  let Gscale = 120;
+  let Tscale = 100;
 
 push();
-translate(30, height/2);
-rotate(-PI/2);
-textAlign(CENTER, CENTER);
-text("Velocity", 0, 0);
+text('mg', - sin(PI/15)*Lscale, cy + Lscale);
+text('Angular momentum',cx,cy - Gscale);
+text('Torque',cx + Tscale*2,cy);
+let j = -sin(PI/15)*height/20;
+textAlign(CENTER, TOP);
+textSize(12);
+text('d',j,6);
+
 pop();
 
+  // ground plane
+  push();
+  rotateX(PI / 2);
+  fill(220);
+  plane(500, 500);
+  pop();
+
+  rotateZ(-PI / 15);
+
+  // cylinder (top)
+  push();
+  fill(255);
+  stroke(0);
+  translate(0, -height / 10, 0);
+  cylinder(width / 5, height / 40);
+  noStroke();
+  cylinder(width / 160, height / 5);
+  pop();
+
+
+  /* -------------------------
+     Gravity Mg (down)
+  --------------------------*/
+drawArrow2D(
+    cx, cy,
+    cx - sin(PI/15)*Lscale,
+    cy + Lscale
+  );
+
+
+  /* -------------------------
+     Angular momentum
+  --------------------------*/
+
+  drawArrow2D(
+    cx, cy,
+    cx,
+    cy - Gscale
+  );
+
+  /* -------------------------
+     Torque τ (horizontal)
+  --------------------------*/
+  drawArrow2D(
+    cx, cy,
+    cx + Tscale*2,
+    cy
+  );
+
+push();
+rotateZ(PI / 15);
+drawBarCaps(cx - sin(PI/15)*height/10,6,0,6);
+pop();
 
 
 }
