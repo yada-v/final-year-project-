@@ -15,8 +15,9 @@
       gap: calc(20 * 0.125vw);                        /* fixed */
     }
     #canvas-wrapper {
-      width: 50%;
-      height: calc(100vh - calc(180 * 0.125vw));      /* fixed */
+	    width: min(68vw, 82.5vh);
+	    height: min(68vw, 82.5vh);
+
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -51,14 +52,15 @@
     <div class="left">
       <h2>Idealization</h2>
 
-<p>Consider a small raindrop falling from thousands of meters ab
-ove the ground.</p>
+<p>Consider a small raindrop falling from thousands of meters above the ground.</p>
       <ul id="qwert" style="opacity:0; transition: opacity 0.5s;">
  <li>We strip away details that are unnecessary for solving the problem.</li>
       </ul>
       <div id="qwer" style="opacity:0; transition: opacity 0.5s;">
 	      <ul>
-<li>We assume the raindrop is a small spherical object with constant mass, falling under gravity and ignoring changes in shape and size.</li>
+<li>We idealize the raindrop as a small spherical object with constant mass.</li>
+<li>We also assume the motion is one-dimensional (top to bottom), with no wind effects.</li>
+<li>Gravity speeds the object up while air resistance slows it down. When the forces balance, the net force is zero, so by inertia it continues at a constant terminal velocity.</li>
 
 	      </ul>
       </div>

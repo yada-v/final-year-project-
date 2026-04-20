@@ -1,102 +1,149 @@
+/// <reference types="p5/global" />
 
-let t;
-function setup() {
-        let rightDiv = document.getElementById("canvas-wrapper");
-//check the clientwidtb/height.need to be changed to sqhare with hwight or width whichever is smaller
-        let canvas = createCanvas(rightDiv.clientWidth, rightDiv.clientWidth , WEBGL);
-          canvas.parent('canvas-wrapper');
+function setup(){
+let rightDiv = document.getElementById("disc");
+let canvas = createCanvas(rightDiv.clientWidth,rightDiv.clientHeight);
+canvas.parent("disc");
+
+positionLabels();
+
+}
+
+
+function arrow(x1,y1,x2,y2) {
+	line(x1,y1,x2,y2);
+
+	push();
+	let angle = atan2(y2 - y1,x2 - x1);
+
+	translate(x2,y2);
+	rotate(angle);
+	noStroke();
+	
+	let arrowSize = height/240;
+	triangle(0+height/360,0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
+	pop();
+	
+}
+
+
+function draw(){
+background(255);
+
+let a,b,c,d,e = 0;
+let slider = document.getElementById("slider");
+let t = parseFloat(slider.value);
+
+let labels = document.getElementById("label");
+labels.style.opacity = t;
+
+let nextButton = document.getElementById("nextButton");
+if (t>0.8) {
+	nextButton.style.opacity = 1;
+}else{
+	nextButton.style.opacity = 0;
 }
 
 
 
-
-function draw() {
-          background(50);
-
-        t = document.getElementById("slider");
-        let  s = parseFloat(t.value);
-        let a = 0;
-        let b = 0;
-        let c = 1;
-        let d = 0;
+let x = width/2; 
+let y = height/8;
+let r = height/15; 
+let offSet = 1.1*r;
 
 
-        if (s<0.3) {
-        a=s/0.3;
-        }
-        if (s>=0.3) {
-                a=1;
-        }
-
-if (s<0.3) {
-b = 0;
-}
-if (s>0.5) {
-        b = 1;
+if ( t > 0 || t < 0.2) {
+	a = 5*t;
+} if(t>0.2){
+	a = 1;
 }
 
-if (s>=0.3 && s<= 0.5) {
-        b = (s - 0.3)/0.2;
+
+if ( t > 0.2 || t < 0.4) {
+	b = 5*(t - 0.2);
+} if(t > 0.4){
+	b = 1;
 }
 
-if (s>0.7) {
-        c = 0;
+
+if ( t > 0.4 || t < 0.6) {
+	c = 5*(t - 0.4);
+} if(t > 0.6){
+	c = 1;
 }
 
-if (s<0.5) {
-        c = 1;
+
+if ( t > 0.6 || t < 0.8) {
+	d = 5*(t - 0.6);
+} if(t > 0.8){
+	d = 1;
 }
 
-if (s>=0.5 && s<= 0.7) {
-        c = ( s - 0.5 ) / 0.2 ;
+
+if ( t > 0.8 || t < 1) {
+	e = 5*(t - 0.8);
+} if(t > 1){
+	e = 1;
 }
 
-if (s>0.7) {
-        d = ( s - 0.7 )/0.3;
-}
-
-push();
-rotateX(PI/2 - b*PI/2);
-rotateY(0);
-rotateZ(0);
-fill(255,255*(1-d));
-plane(500,500);
-pop();
 
 
-
-
-rotateX(-b*PI/2);
-rotateY(frameCount * 0.11 * c);
-rotateZ((a-1)*PI/30);
-
-push();
-fill(255, 255*(1-d));
-stroke(0,255*(1-d));
-translate(0,-height/10,0);
-cylinder(width/5, height/40);
 noStroke();
-cylinder(width/160, height/5);
 
-let n = 10;
-let R = width/5;
+fill(0,51*a);
+circle(x,2*y,r);
 
 
-translate(0,-height/10,0);
 
-rotateX(-PI/2);
-for (let i = n -1; i >= 1; i--) {
-        let r = i*R/n;
+fill(0,102*b);
+circle(x,3*y,r);
 
-fill(255,255*d);
-stroke(0,255*d);
- circle(0, 0, 2*r);
+
+
+fill(0,153*c);
+circle(x,4*y,r);
+
+
+
+fill(0,204*d);
+circle(x,5*y,r);
+
+
+
+fill(0,255*e);
+circle(x,6*y,r);
+
+//arrows
+
+stroke(0);
+strokeWeight(1);
+
+arrow(x ,3 * y - offSet ,x ,2 * y + offSet);	
+arrow(x ,4 * y - offSet ,x ,3 * y + offSet);	
+arrow(x ,5 * y - offSet ,x ,4 * y + offSet);	
+arrow(x ,6 * y - offSet ,x ,5 * y + offSet);	
+
+
+
+}
+
+function positionLabels() {
+	let wrapper = select('.canvas-wrapper');
+	if(!wrapper || !wrapper.elt) return;
+
+	let w = wrapper.width;
+	let h = wrapper.height;
+
+
+	select('#vn').position(w * 0.05, h * 0.25);
+	select('#vn1').position(w * 0.05, h * 0.375);  
+	select('#vn2').position(w * 0.05, h * 0.5);   
+	select('#vn3').position(w * 0.05, h * 0.625);   
+	select('#vn4').position(w * 0.05, h * 0.75);
 
 }
 
 
 
-pop();
 
 
-}
