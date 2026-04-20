@@ -72,34 +72,36 @@ function draw() {
         drawArrow2D(0, 0, 0, -h * b);
         drawArrow2D(0,0,0,h);
         drawArrow2D(w,-h*b*0.4,w,h*b*0.4);
-        drawArrow2D(-w,-h*(1-b)*0.35,-w,h*(1-b)*0.35);
+       
+stroke(255, 255 * (1-b));
+  fill(255, 255 * (1-b)); drawArrow2D(-w,-h*(1-b)*0.35,-w,h*(1-b)*0.35);
 
 textAlign(CENTER,BOTTOM);
-text('\nGravity', 0, h);
+text(' \nGravity', 0, h);
 
-if (b>0.01) {
+if (b>0.01 && b<1) {
         textAlign(CENTER,TOP);
-        text('Drag\n', 0, -h*b);
+        text('Drag\n ', 0, -h*b);
 }
-if (b ==1) {
+if (b == 1) {
         textAlign(CENTER,TOP);
-        text('Drag = Gravity\n', 0, -h*b);
-        textAlign(RIGHT,CENTER);
-        text('Terminal\nVelocity', w, 0);
+        text('Drag = Gravity\n ', 0, -h*b);
         textAlign(LEFT,CENTER);
+        text('Terminal\nVelocity', w, 0);
+        textAlign(RIGHT,CENTER);
   stroke(255, 255 * b);
   fill(255, 255 * b);
         text('Net\nForce = 0', -w, 0);
 }
 
 if (b<1) {
-        textAlign(RIGHT,CENTER);
-        text('Velocity', w, 0);
+        textAlign(LEFT,CENTER);
+        text('  Velocity', w, 0);
 }
 
 if (b<1) {
-        textAlign(LEFT, CENTER);
-        text('Net Force', -w, 0);
+        textAlign(RIGHT, CENTER);
+        text('Net Force  ', -w, 0);
 }
 
 tint(255, 255 * (1 - a));
