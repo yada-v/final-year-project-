@@ -267,7 +267,7 @@ label {
 /* Image dimensions for reality page */
 .op {
   width: 35vw;          /* = 280 * 0.125vw */
-  height: 35vw;          /* = 200 * 0.125vw */
+  height: 25vw;          /* = 200 * 0.125vw */
   object-fit: cover;
   border-radius: 1.25vw;
   border: 0.375vw solid #c5cde0;

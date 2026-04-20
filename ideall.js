@@ -1,7 +1,7 @@
 let img;
 
 function preload() {
-  img = loadImage('rain.webp');
+  img = loadImage('sky.webp');
 }
 
 let t;
@@ -15,24 +15,35 @@ function setup() {
   canvas.parent('canvas-wrapper');
 }
 
-function draw() {
-  background(50);
 
-  t = document.getElementById("slider");
-  let s = parseFloat(t.value);
+let circles = [];
 
-  
-  tint(255, 255 * (1 - s));
-  imageMode(CENTER);
-  // In WEBGL, (0,0) is the canvas center
-  image(img, 0, 0, width, height);
+    textAlign(CENTER, CENTER);
 
+    for(let i = 0; i < 30; i++){
+      circles.push({
+        x: random(width),
+        y: random(-height, 0),   // start above screen
+        speed: random(3, 8)
+      });
+    }
 
-	rotateY(frameCount * 0.11);
-	fill(255,255*s);
-	stroke(0,255*s);
-	sphere(width/7);
-}
+  draw = function(){
+    background(80,160,200);
+
+    // optional central object
+
+    for(let c of circles){
+      circle(c.x, c.y, 37.5);
+
+      c.y += c.speed;   // move DOWN
+
+      if(c.y > height){
+        c.y = random(-50, 0);   // reset to top
+        c.x = random(width);  // new random x
+      }
+    }
+  }
 
 function windowResized() {
   let rightDiv = document.getElementById("canvas-wrapper");
