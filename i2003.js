@@ -87,6 +87,8 @@ if (b ==1) {
         textAlign(RIGHT,CENTER);
         text('Terminal\nVelocity', w, 0);
         textAlign(LEFT,CENTER);
+  stroke(255, 255 * b);
+  fill(255, 255 * b);
         text('Net\nForce = 0', -w, 0);
 }
 
