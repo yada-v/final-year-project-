@@ -75,28 +75,28 @@ function draw() {
         drawArrow2D(-w,-h*(1-b)*0.35,-w,h*(1-b)*0.35);
 
 textAlign(CENTER,BOTTOM);
-text('Gravity', 0, h);
+text('\nGravity', 0, h);
 
 if (b>0.01) {
         textAlign(CENTER,TOP);
-        text('Drag', 0, -h*b);
+        text('Drag\n', 0, -h*b);
 }
 if (b ==1) {
         textAlign(CENTER,TOP);
-        text('Drag = \nGravity', 0, -h*b);
-        textAlign(CENTER,RIGHT);
+        text('Drag = Gravity\n', 0, -h*b);
+        textAlign(RIGHT,CENTER);
         text('Terminal\nVelocity', w, 0);
-        textAlign(CENTER,LEFT);
+        textAlign(LEFT,CENTER);
         text('Net\nForce = 0', -w, 0);
 }
 
 if (b<1) {
-        textAlign(CENTER,RIGHT);
+        textAlign(RIGHT,CENTER);
         text('Velocity', w, 0);
 }
 
 if (b<1) {
-        textAlign(CENTER,LEFT);
+        textAlign(LEFT, CENTER);
         text('Net Force', -w, 0);
 }
 
