@@ -1,152 +1,142 @@
-let t;
-let font;
+/// <reference types="p5/global" />
 
-function preload(){
 
-font = loadFont('Inconsolata.otf');
+function setup(){
+let rightDiv = document.getElementById("igraph");
+let canvas = createCanvas(rightDiv.clientWidth*0.97, rightDiv.clientHeight);
+canvas.parent("igraph");
 }
 
-
-function setup() {
-  let rightDiv = document.getElementById("canvas-wrapper");
-  let canvas = createCanvas(rightDiv.clientWidth, rightDiv.clientWidth, WEBGL);
-  canvas.parent('canvas-wrapper');
-
-	textFont(font);
-  textSize(16);
-  textAlign(CENTER, CENTER);
-}
-
-/* -------------------------
-   2D Arrow (in WEBGL XY plane)
---------------------------*/
-function drawArrow2D(x1, y1, x2, y2, headSize = 10) {
-  push();
-
-  let dx = x2 - x1;
-  let dy = y2 - y1;
-  let angle = atan2(dy, dx);
-  let len = sqrt(dx * dx + dy * dy);
-
-  translate(x1, y1);
-  rotateZ(angle);
-
-  stroke(255);
-  strokeWeight(2);
-  line(0, 0, len - headSize, 0);
-
-  noStroke();
-  translate(len - headSize, 0);
-  fill(255);
-  triangle(
-    0, 0,
-    -headSize, headSize / 2,
-    -headSize, -headSize / 2
-  );
-
-  pop();
-}
-
-
-
-function drawBarCaps(x1, y1, x2, y2, capSize = 2) {
-  push();
-  stroke(255,255,0);
-  strokeWeight(2);
-
-  line(x1, y1, x2, y2);
-
-  // left cap
-  line(x1, y1 - capSize, x1, y1 + capSize);
-
-  // right cap
-  line(x2, y2 - capSize, x2, y2 + capSize);
-
-  pop();
-}
-
-
-
-
-
-function draw() {
-  background(50);
-
-  t = document.getElementById("slider");
-  let s = parseFloat(t.value);
-
-  let cx = 0;
-  let cy = -height / 10;
-
-
-  let Lscale = 120;
-  let Gscale = 120;
-  let Tscale = 100;
+function arrow(x1,y1,x2,y2 , arrowSize = 10){
+line(x1,y1,x2,y2);
 
 push();
-text('mg', - sin(PI/15)*Lscale, cy + Lscale);
-text('Angular momentum',cx,cy - Gscale);
-text('Torque',cx + Tscale*2,cy);
-let j = -sin(PI/15)*height/20;
-textAlign(CENTER, TOP);
-textSize(12);
-text('d',j,6);
+let angle = atan2( y2 - y1, x2 - x1 );
+translate(x2,y2);
+rotate(angle);
+
+
+noFill();
+triangle(0, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
+
 
 pop();
 
-  // ground plane
-  push();
-  rotateX(PI / 2);
-  fill(220);
-  plane(500, 500);
-  pop();
-
-  rotateZ(-PI / 15);
-
-  // cylinder (top)
-  push();
-  fill(255);
-  stroke(0);
-  translate(0, -height / 10, 0);
-  cylinder(width / 5, height / 40);
-  noStroke();
-  cylinder(width / 160, height / 5);
-  pop();
+}
 
 
-  /* -------------------------
-     Gravity Mg (down)
-  --------------------------*/
-drawArrow2D(
-    cx, cy,
-    cx - sin(PI/15)*Lscale,
-    cy + Lscale
-  );
+let h;
+
+function draw(){
+background(255);
+translate(width/2, height/2);
+
+let t = parseFloat(document.getElementById("slider").value);
+
+//mg
+strokeWeight(3);
+let qw = color(230,57,70);
+stroke(qw);
+arrow(0, 0,0,height/3 );
+
+textSize(20);
+strokeWeight(1);
+textAlign(CENTER,BOTTOM);
+noStroke();
+fill(qw);
+text("Gravity",0,height/3 + 30);
 
 
-  /* -------------------------
-     Angular momentum
-  --------------------------*/
+//drag
+let length = t*height/3;
+strokeWeight(3);
+let we = color(42, 157, 143);
+stroke(we);
+arrow(0, 0,0,-1*length );
 
-  drawArrow2D(
-    cx, cy,
-    cx,
-    cy - Gscale
-  );
+textSize(20);
+strokeWeight(1);
+textAlign(CENTER,TOP);
+noStroke();
+fill(we);
+if (t==1) {
+        text("Drag = Gravity",0,-1*length - height/10);
+} if(t==0) {
+        text("Drag = 0",0, -1*length - height/10);
+} if(t>0 && t<1){
+	text("Drag", 0, -1*length - height/10);
+}
 
-  /* -------------------------
-     Torque τ (horizontal)
-  --------------------------*/
-  drawArrow2D(
-    cx, cy,
-    cx + Tscale*2,
-    cy
-  );
+//obj
+fill(60,70,90);
+stroke(100,150,255,180);
+strokeWeight(1);
+circle(0,0,height/10);
 
-push();
-rotateZ(PI / 15);
-drawBarCaps(cx - sin(PI/15)*height/10,6,0,6);
-pop();
+//Net force
+
+if (t==1) {
+	h=0;
+} else {
+	h=220;
+}
+let up = (1-t)*height/3;
+strokeWeight(3);
+let col = color(69, 123, 157,h);
+stroke(col);
+arrow(width/4, -1*up, width/4, up);
+
+textSize(20);
+strokeWeight(1);
+textAlign(LEFT,BOTTOM);
+noStroke();
+let col1 = color(69, 123, 157);
+fill(col1);
+if (t==1) {
+	text("Net Force\n    = 0",width/4 + 20,0 + up);
+} else {
+	text("Net Force",width/4 + 20,0 + up);
+}
+
+//velocity
+let d = t*height/3;
+let e;
+if (t==0) {
+	e=0;
+} else {
+	e=255;
+}
+strokeWeight(3);
+
+let er = color(76, 175, 80,e);
+let er1 = color(76, 175, 80);
+stroke(er);
+arrow(-1*width/5, -0.7*d, -1*width/5, 0.7*d);
+
+textSize(20);
+strokeWeight(1);
+textAlign(RIGHT,BOTTOM);
+noStroke();
+fill(er1);
+if (t>0 && t<1) {
+	text("Velocity", -1*width/5 - 20, 0.7*d);
+}
+if(t==0){
+	text("Velocity = 0", -1*width/5 - 20, 0.7*d);
+	}
+
+if(t==1){
+        text(" Terminal\nVelocity", -1*width/5 - 20, 0.7*d);
+        }
+//back to normal
+translate(-width/2,-height/2);
+
+textAlign(LEFT,TOP);
+let time = (5*t).toFixed(2);
+stroke(0,0,0);
+textSize(25);
+fill(0,0,0)
+text("t = " + time,10,10);
 
 
 }
