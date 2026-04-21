@@ -93,7 +93,7 @@ fill(255,255);
         textAlign(CENTER,TOP);
         text('Drag = Gravity\n    ', 0, -h*b);
         textAlign(LEFT,CENTER);
-        text('  Terminal\nVelocity', w, 0);
+        text('  Terminal\n  Velocity', w, 0);
         textAlign(RIGHT,CENTER);
   stroke(255, 255);
   fill(255, 255);
