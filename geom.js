@@ -1,132 +1,98 @@
 /// <reference types="p5/global" />
 
+let rightDiv = document.getElementById("graph");
+let slider = document.getElementById("slider");
+
 function setup() {
-  let rightDiv = document.getElementById("graph");
-  let canvas = createCanvas(rightDiv.clientWidth * 0.97, rightDiv.clientHeight);
+  let canvas = createCanvas(rightDiv.clientWidth, rightDiv.clientHeight);
   canvas.parent("graph");
 }
 
-function arrow(x1, y1, x2, y2, arrowSize = 10) {
+function arrow(x1, y1, x2, y2) {
   line(x1, y1, x2, y2);
 
   push();
   let angle = atan2(y2 - y1, x2 - x1);
-  translate(x2, y2);
+  let arrowSize = height / 100;
+  let offset = arrowSize * 0.5;
+  translate(
+    x2 - offset * cos(angle),
+    y2 - offset * sin(angle)
+  );
   rotate(angle);
-
-  noFill();
-  triangle(0, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
+  fill(0);
+  noStroke();
+  triangle(height / 80, 0, -arrowSize, -arrowSize / 2, -arrowSize, arrowSize / 2);
   pop();
 }
 
-let h;
+function dottedLine(x1, y1, x2, y2) {
+  let spacing = 6;
+  push();
+  let d = dist(x1, y1, x2, y2);
+  let steps = d / spacing;
+
+  stroke(0, 150, 0, 120);   // Set stroke once before loop
+  strokeWeight(2);          // Ensure dots are visible but not huge
+
+  for (let i = 0; i <= steps; i++) {
+    let t = i / steps;
+    let x = lerp(x1, x2, t);
+    let y = lerp(y1, y2, t);
+    point(x, y);
+  }
+  pop();
+}
 
 function draw() {
   background(255);
-  translate(width / 2, height / 2);
 
-  let t = parseFloat(document.getElementById("slider").value);
+  let t = parseFloat(slider.value);
+  noFill();
 
-  // mg
+  let h = 1 - t + 0.01;
   strokeWeight(3);
-  let qw = color(230, 57, 70);
-  stroke(qw);
-  arrow(0, 0, 0, height / 3);
+  beginShape();
+  stroke(255, 0, 0);
 
-  textSize(20);
-  strokeWeight(1);
+  for (let x = 0; x <= 10; x = x + 10 * h / 3) {
+    let y = 0.7 * (1 - exp(-x / 1));
+    let px = map(x, 0, 10, 50, width - 50);
+    let py = map(y, 0, 1, height - 50, 50);
+    vertex(px, py);
+
+    push();
+    stroke(0, 150, 255, 60);
+    line(px, height - 50, px, py);
+    pop();
+  }
+
+  let yLine = 0.3 * (height - 100) + 50;
+  dottedLine(50, yLine, width - 50, yLine);
+  endShape();
+
+  // x-axis
+  stroke(0);
+  strokeWeight(2);
+  arrow(50, height - 50, width - 40, height - 50);
+
+  // y-axis
+  stroke(0);
+  arrow(50, height - 50, 50, 50);
+
+  // Labels
   textAlign(CENTER, BOTTOM);
-  noStroke();
-  fill(qw);
-  text("Gravity", 0, height / 3 + 30);
-
-  // drag
-  let length = t * height / 3;
-  strokeWeight(3);
-  let we = color(42, 157, 143);
-  stroke(we);
-  arrow(0, 0, 0, -1 * length);
-
-  textSize(20);
   strokeWeight(1);
+  fill(0);
+  text("Time", width / 2, height - 20);
+
   textAlign(CENTER, TOP);
-  noStroke();
-  fill(we);
-  if (t == 1) {
-    text("Drag = Gravity", 0, -1 * length - height / 10);
-  } else if (t == 0) {
-    text("Drag = 0", 0, -1 * length - height / 10);
-  } else if (t > 0 && t < 1) {
-    text("Drag", 0, -1 * length - height / 10);
-  }
+  text("Terminal Velocity", width / 3, (3 * height) / 10 - 20);
 
-  // obj
-  fill(60, 70, 90);
-  stroke(100, 150, 255, 180);
-  strokeWeight(1);
-  circle(0, 0, height / 10);
-
-  // Net force
-  if (t == 1) {
-    h = 0;
-  } else {
-    h = 220;
-  }
-  let up = (1 - t) * height / 3;
-  strokeWeight(3);
-  let col = color(69, 123, 157, h);
-  stroke(col);
-  arrow(width / 4, -1 * up, width / 4, up);
-
-  textSize(20);
-  strokeWeight(1);
-  textAlign(LEFT, BOTTOM);
-  noStroke();
-  let col1 = color(69, 123, 157);
-  fill(col1);
-  if (t == 1) {
-    text("Net Force\n    = 0", width / 4 + 20, 0 + up);
-  } else {
-    text("Net Force", width / 4 + 20, 0 + up);
-  }
-
-  // velocity
-  let d = t * height / 3;
-  let e;
-  if (t == 0) {
-    e = 0;
-  } else {
-    e = 255;
-  }
-  strokeWeight(3);
-
-  let er = color(76, 175, 80, e);
-  let er1 = color(76, 175, 80);
-  stroke(er);
-  arrow(-1 * width / 5, -0.7 * d, -1 * width / 5, 0.7 * d);
-
-  textSize(20);
-  strokeWeight(1);
-  textAlign(RIGHT, BOTTOM);
-  noStroke();
-  fill(er1);
-  if (t > 0 && t < 1) {
-    text("Velocity", -1 * width / 5 - 20, 0.7 * d);
-  }
-  if (t == 0) {
-    text("Velocity = 0", -1 * width / 5 - 20, 0.7 * d);
-  }
-  if (t == 1) {
-    text(" Terminal\nVelocity", -1 * width / 5 - 20, 0.7 * d);
-  }
-
-  // back to normal
-  translate(-width / 2, -height / 2);
-
-  textAlign(LEFT, TOP);
-  let time = (5 * t).toFixed(2);
-  stroke(0, 0, 0);
-  textSize(25);
-  fill(0, 0, 0);
-  text("t = " + time, 10, 10);
+  push();
+  translate(30, height / 2);
+  rotate(-PI / 2);
+  textAlign(CENTER, CENTER);
+  text("Velocity", 0, 0);
+  pop();
 }
