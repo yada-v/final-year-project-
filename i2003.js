@@ -85,15 +85,15 @@ if (b>0.01 && b<1) {
 stroke(255, 255 );
 fill(255,255);
         textAlign(CENTER,TOP);
-        text('Drag\n ', 0, -h*b);
+        text('Drag\n   ', 0, -h*b);
 }
 if (b == 1) {
 stroke(255, 255);
 fill(255,255);
         textAlign(CENTER,TOP);
-        text('Drag = Gravity\n ', 0, -h*b);
+        text('Drag = Gravity\n    ', 0, -h*b);
         textAlign(LEFT,CENTER);
-        text('Terminal\nVelocity', w, 0);
+        text('  Terminal\nVelocity', w, 0);
         textAlign(RIGHT,CENTER);
   stroke(255, 255);
   fill(255, 255);
