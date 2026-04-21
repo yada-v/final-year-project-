@@ -110,8 +110,8 @@ body {
 
 /* ---------- LEFT PANEL (TEXT) ---------- */
 .left {
-  width: 32%;
-  min-height: calc(100vh - 17.5vw);
+  width: 32vw;
+  min-height: 82.5;
   background: #ffffff;
   padding: 3.5vw 3vw 3vw;        /* ≈ 28, 24, 24 * 0.125vw */
   display: flex;
